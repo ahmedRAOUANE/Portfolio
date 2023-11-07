@@ -30,7 +30,7 @@ const NavbarList = ({show}) => {
                 }
             }}
         >
-            {["Home", "about me", "my skills", "my works", "contact me"].map(link => (
+            {["Home", "about me", "my Expertise", "my works", "contact me"].map(link => (
                 <ListItem key={link}>
                     <ListItemButton
                         sx={{

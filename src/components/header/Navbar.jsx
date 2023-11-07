@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Box, Container } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Container } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import NavbarList from './NavbarList';
 
@@ -7,7 +7,7 @@ const Navbar = () => {
     const [showNavList, setShowNavList] = useState(false);
 
     return (
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Container>
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
