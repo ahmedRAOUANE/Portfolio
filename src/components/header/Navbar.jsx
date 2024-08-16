@@ -10,8 +10,10 @@ const Navbar = () => {
         <AppBar position="fixed">
             <Container>
                 <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        <img src="/A.svg" alt="icon" />
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1, letterSpacing: '2px' }}>
+                        <svg width="30" height="40" xmlns="http://www.w3.org/2000/svg">
+                            <text x="0" y="40" font-family="Arial" font-size="40" fill="white">A</text>
+                        </svg>
                         hmed
                     </Typography>
                     <IconButton
