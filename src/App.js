@@ -1,23 +1,36 @@
-import Footer from './components/footer/Footer';
-import Navbar from './components/header/Navbar';
-import About from './containers/about/About';
-import Expertise from './containers/expertise/Expertise';
-import Home from './containers/home/Home';
-import LetsCollaborate from './containers/letsCollaborate/letsCollaborate';
-import MyWorks from './containers/myWorks/MyWorks';
+import { useState } from 'react';
+import getLPTheme from './getLPtheme';
+import { createTheme, Stack, ThemeProvider } from '@mui/material';
 
+// components
+import Header from './components/Header';
+import Hero from './containers/hero/Hero';
+import About from './containers/about/About';
+import MyWorks from './containers/myWorks/MyWorks';
+import Expertise from './containers/expertise/Expertise';
+import LetsCollaborate from './containers/letsCollaborate/letsCollaborate';
+import Footer from './components/Footer';
 
 function App() {
+  const [mode, setMode] = useState('light');
+  const LPtheme = createTheme(getLPTheme(mode));
+
+  const toggleColorMode = () => {
+    setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   return (
-    <>
-      <Navbar />
-      <Home />
-      <About />
-      <Expertise />
-      <MyWorks />
-      <LetsCollaborate/>
-      <Footer />
-    </>
+    <ThemeProvider theme={LPtheme}>
+      <Header mode={mode} toggleColorMode={toggleColorMode} />
+      <Stack spacing={10} useFlexGap sx={{ bgcolor: 'background.default' }}>
+        <Hero />
+        <About />
+        <Expertise />
+        <MyWorks />
+        <LetsCollaborate />
+        <Footer />
+      </Stack>
+    </ThemeProvider>
   );
 }
 
