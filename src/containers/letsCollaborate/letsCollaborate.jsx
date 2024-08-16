@@ -22,13 +22,13 @@ const LetsCollaborate = () => {
               </ListItemText>
             </ListItem>
             <ListItem>
-              <ListItemText>Email: <Link sx={{cursor: "pointer"}}>ahmedraouane30@gmail.com</Link></ListItemText>
+              <ListItemText>Email: <Link href="https://www.ahmedraouane30@gmail.com" target="_blank" sx={{ cursor: "pointer" }}>ahmedraouane30@gmail.com</Link></ListItemText>
             </ListItem>
             <ListItem>
-              <ListItemText>LinkedIn: <Link sx={{cursor: "pointer"}}>ahmedRaouane</Link></ListItemText>
+              <ListItemText>LinkedIn: <Link href="https://www.linkedin.com/in/ahmed-raouane-805297261" target="_blank" sx={{ cursor: "pointer" }}>ahmedRaouane</Link></ListItemText>
             </ListItem>
             <ListItem>
-              <ListItemText>Github: <Link sx={{cursor: "pointer"}}>ahmedRAOUANE</Link></ListItemText>
+              <ListItemText>Github: <Link href="https://github.com/ahmedRAOUANE" target="_blank" sx={{ cursor: "pointer" }}>ahmedRAOUANE</Link></ListItemText>
             </ListItem>
             <ListItem>
               <ListItemText>Phone: <Link sx={{cursor: "pointer"}}>0549868380</Link></ListItemText>
