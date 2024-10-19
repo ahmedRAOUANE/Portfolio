@@ -13,11 +13,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 ::-webkit-scrollbar{
   display: none;
+}
+
+img {
+  max-width: 100%;
+  filter: drop-shadow(-4px 9px 130px rgba(9, 90, 170, 0.781)) drop-shadow(-4px 9px 12px rgba(3, 51, 99, 0.938));
 }

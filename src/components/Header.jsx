@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
+import { scrollToSection } from '../lib/utils';
 
 const logoStyle = {
     height: 'auto',
@@ -22,7 +23,7 @@ const logoStyle = {
         theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
 };
 
-const NavList = ({ scrollToSection }) => {
+const NavList = () => {
     return (
         <Box sx={{ display: 'flex', flexDirection: { xs: "column", md: "row" } }}>
             {["About", "Expertise", "Works", "Contact"].map((item, idx) => (
@@ -45,20 +46,6 @@ const Header = ({ mode, toggleColorMode }) => {
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
-    };
-
-    const scrollToSection = (sectionId) => {
-        const sectionElement = document.getElementById(sectionId);
-        const offset = 128;
-        if (sectionElement) {
-            const targetScroll = sectionElement.offsetTop - offset;
-            sectionElement.scrollIntoView({ behavior: 'smooth' });
-            window.scrollTo({
-                top: targetScroll,
-                behavior: 'smooth',
-            });
-            setOpen(false);
-        }
     };
 
     return (
@@ -95,12 +82,12 @@ const Header = ({ mode, toggleColorMode }) => {
                                     : '0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)',
                         })}
                     >
-                        <Typography variant='h1' sx={logoStyle}>
+                        <Typography variant='h1' sx={logoStyle} onClick={() => scrollToSection("hero")}>
                             Ahmed
                         </Typography>
 
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <NavList scrollToSection={scrollToSection} />
+                            <NavList />
                         </Box>
 
                         <Box

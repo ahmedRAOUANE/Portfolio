@@ -1,9 +1,12 @@
 import React from 'react';
 import { alpha, Box, Button, Container, Stack, Typography } from '@mui/material';
+import { scrollToSection } from '../../lib/utils';
 
 const Hero = () => {
   return (
-    <Box sx={(theme) => ({
+    <Box
+      id="hero"
+      sx={(theme) => ({
       width: '100%',
       backgroundImage:
         theme.palette.mode === 'light'
@@ -12,7 +15,8 @@ const Hero = () => {
       backgroundSize: '100% 20%',
       backgroundRepeat: 'no-repeat',
       color: "text.primary"
-    })}>
+      })}
+    >
       <Container sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -20,7 +24,7 @@ const Hero = () => {
         pt: { xs: 14, sm: 20 },
         // pb: { xs: 8, sm: 12 },
       }}>
-        <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>
+        <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' }, height: "100vh" }}>
           <Typography
             variant="h1"
             sx={{
@@ -62,8 +66,12 @@ const Hero = () => {
             useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
-            <Button variant='contained'>view projects</Button>
-            <Button variant='contained'>contact me</Button>
+            <Button variant='contained' onClick={() => scrollToSection("works")}>
+              view projects
+            </Button>
+            <Button variant='contained' onClick={() => scrollToSection("contact")}>
+              contact me
+            </Button>
           </Stack>
         </Stack>
       </Container>
