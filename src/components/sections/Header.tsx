@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'
+import LogoutBtn from '../logout-btn';
 
 const headerLinks = [
     {
@@ -25,9 +26,10 @@ const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
             <ul className={className}>
                 {headerLinks.map((link) => (
                     <li key={link.href}>
-                        <Link href={link.href} className="hover:text-primary">{link.label}</Link>
+                        <Link href={link.href} className='cursor-pointer'>{link.label}</Link>
                     </li>
                 ))}
+                <LogoutBtn />
             </ul>
         </nav>
     )

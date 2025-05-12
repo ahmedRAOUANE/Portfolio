@@ -50,132 +50,155 @@
 /* Text */
 @layer components {
   /* Sizes */
-  [class^="text-"][class*="-sm"] {
+  [class*="text-"][class*="-xs"] {
+    @apply text-xs;
+  }
+  [class*="text-"][class*="-sm"] {
     @apply text-sm;
   }
-  [class^="text-"][class*="-md"] {
+  [class*="text-"][class*="-md"] {
     @apply text-base;
   }
-  [class^="text-"][class*="-lg"] {
+  [class*="text-"][class*="-lg"] {
     @apply text-lg;
   }
-  [class^="text-"][class*="-xl"] {
+  [class*="text-"][class*="-xl"] {
     @apply text-xl;
   }
-  [class^="text-"][class*="-2xl"] {
+  [class*="text-"][class*="-2xl"] {
     @apply text-2xl;
   }
-  [class^="text-"][class*="-3xl"] {
+  [class*="text-"][class*="-3xl"] {
     @apply text-3xl;
   }
-  [class^="text-"][class*="-4xl"] {
+  [class*="text-"][class*="-4xl"] {
     @apply text-4xl;
   }
-  [class^="text-"][class*="-5xl"] {
+  [class*="text-"][class*="-5xl"] {
     @apply text-5xl;
   }
-  [class^="text-"][class*="-6xl"] {
+  [class*="text-"][class*="-6xl"] {
     @apply text-6xl;
   }
-  [class^="text-"][class*="-7xl"] {
+  [class*="text-"][class*="-7xl"] {
     @apply text-7xl;
   }
-  [class^="text-"][class*="-8xl"] {
+  [class*="text-"][class*="-8xl"] {
     @apply text-8xl;
   }
-  [class^="text-"][class*="-9xl"] {
+  [class*="text-"][class*="-9xl"] {
     @apply text-9xl;
   }
 
   /* Colors */
-  [class^="text-"][class*="-foreground"] {
+  [class*="text-"][class*="-foreground"] {
     @apply text-[var(--foreground)];
   }
-  [class^="text-"][class*="-background"] {
+  [class*="text-"][class*="-background"] {
     @apply text-[var(--background)];
   }
-  [class^="text-"][class*="-primary"] {
+  [class*="text-"][class*="-primary"] {
     @apply text-[var(--primary)];
   }
-  [class^="text-"][class*="-secondary"] {
+  [class*="text-"][class*="-secondary"] {
     @apply text-[var(--secondary)];
   }
-  [class^="text-"][class*="-success"] {
+  [class*="text-"][class*="-success"] {
     @apply text-[var(--success)];
   }
-  [class^="text-"][class*="-danger"] {
+  [class*="text-"][class*="-danger"] {
     @apply text-[var(--danger)];
   }
-  [class^="text-"][class*="-warning"] {
+  [class*="text-"][class*="-warning"] {
     @apply text-[var(--warning)];
   }
-  [class^="text-"][class*="-info"] {
+  [class*="text-"][class*="-info"] {
     @apply text-[var(--info)];
   }
-  [class^="text-"][class*="-light"] {
+  [class*="text-"][class*="-light"] {
     @apply text-[var(--light)];
   }
-  [class^="text-"][class*="-dark"] {
+  [class*="text-"][class*="-dark"] {
     @apply text-[var(--dark)];
   }
 
   /* font weight */
-  [class^="text-"][class*="-thin"] {
+  [class*="text-"][class*="-thin"] {
     @apply font-thin;
   }
-  [class^="text-"][class*="-extralight"] {
+  [class*="text-"][class*="-extralight"] {
     @apply font-extralight;
   }
-  [class^="text-"][class*="-light"] {
+  [class*="text-"][class*="-light"] {
     @apply font-light;
   }
-  [class^="text-"][class*="-normal"] {
+  [class*="text-"][class*="-normal"] {
     @apply font-normal;
   }
-  [class^="text-"][class*="-medium"] {
+  [class*="text-"][class*="-medium"] {
     @apply font-medium;
   }
-  [class^="text-"][class*="-semibold"] {
+  [class*="text-"][class*="-semibold"] {
     @apply font-semibold;
   }
-  [class^="text-"][class*="-bold"] {
+  [class*="text-"][class*="-bold"] {
     @apply font-bold;
   }
-  [class^="text-"][class*="-extrabold"] {
+  [class*="text-"][class*="-extrabold"] {
     @apply font-extrabold;
   }
 
   /* font style */
-  [class^="text-"][class*="-black"] {
+  [class*="text-"][class*="-black"] {
     @apply font-black;
   }
-  [class^="text-"][class*="-italic"] {
+  [class*="text-"][class*="-italic"] {
     @apply italic;
   }
 
   /* text decoration */
-  [class^="text-"][class*="-underline"] {
+  [class*="text-"][class*="-underline"] {
     @apply underline;
   }
-  [class^="text-"][class*="-line-through"] {
+  [class*="text-"][class*="-line-through"] {
     @apply line-through;
   }
-  [class^="text-"][class*="-no-underline"] {
+  [class*="text-"][class*="-no-underline"] {
     @apply no-underline;
   }
 
   /* text transform */
-  [class^="text-"][class*="-uppercase"] {
+  [class*="text-"][class*="-uppercase"] {
     @apply uppercase;
   }
-  [class^="text-"][class*="-lowercase"] {
+  [class*="text-"][class*="-lowercase"] {
     @apply lowercase;
   }
-  [class^="text-"][class*="-capitalize"] {
+  [class*="text-"][class*="-capitalize"] {
     @apply capitalize;
   }
-  [class^="text-"][class*="-normal-case"] {
+  [class*="text-"][class*="-normal-case"] {
     @apply normal-case;
+  }
+
+  /* Text position */
+  [class*="text-"][class*="-center"] {
+    @apply text-center;
+  }
+  [class*="text-"][class*="-left"] {
+    @apply text-left;
+  }
+  [class*="text-"][class*="-right"] {
+    @apply text-right;
+  }
+  [class*="text-"][class*="-justify"] {
+    @apply text-justify;
+  }
+  [class*="text-"][class*="-start"] {
+    @apply text-start;
+  }
+  [class*="text-"][class*="-end"] {
+    @apply text-end;  
   }
 }
 

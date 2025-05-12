@@ -15,7 +15,7 @@ export default function Home() {
         <Contact />
       </main>
       
-      <Footer />
+      <Footer className='container mx-auto p-4 text-sm-foreground-center' />
     </div>
   );
 }
