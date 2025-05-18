@@ -3,68 +3,44 @@ import { supabase as supabaseClient } from "./supabase/client";
 import { createClient } from "./supabase/server";
 import { CustomResponse } from "./types/response";
 import { Profile } from "./types/profile";
+import { check, withErrorHandling } from "./validations";
 
-export const getUser = async (): Promise<CustomResponse<{user: User, profile: Profile}>> => {
-    const supabaseServer = await createClient();
+export const getUser = async (): Promise<CustomResponse<{ user: User; profile: Profile }>> => {
+    return await withErrorHandling(async () => {
+        const supabaseServer = await createClient();
 
-    try {
         const { data: { user }, error: authError } = await supabaseServer.auth.getUser();
 
-        if (authError) {
-            return {
-                success: false,
-                message: 'Authentication error'
-            };
-        }
+        check(authError === null, "Authentication Error - can not get User", "object");
 
-        if (!user) {
-            return {
-                success: false,
-                message: 'No user found'
-            };
-        }
+        check(user !== null, "no user found", "object");
 
-        const { success, message, data: profile } = await getUsersProfile(user)
+        const { success, message, data: profile } = await getUsersProfile(user!);
 
-        if (!success) {
-            return {
-                success: false,
-                message
-            };
-        }
+        check(success, message || "get profile error", "object");
 
         return {
             success: true,
             data: {
-                user,
-                profile
+                user: user!,
+                profile: profile as Profile
             }
         };
-    } catch (error: unknown) {
-        console.error('Get user error:', error);
+    }) as CustomResponse<{ user: User; profile: Profile }>;
+}
+
+export const getUsersProfile = async (user: User): Promise<CustomResponse<Profile>> =>
+    await withErrorHandling(async () => {
+        const { data: profile, error: profileError } = await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+
+        check(profileError !== null || profile !== null, profileError?.message || "failed to fetch user profile!", "object");
+
         return {
-            success: false,
-            message: (error instanceof Error) ? error.message : "something went wrong, try again"
+            success: true,
+            data: profile
         };
-    }
-}
-
-export const getUsersProfile = async (user: User): Promise<CustomResponse<Profile>> => {
-    const { data: profile, error: profileError } = await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-
-    if (profileError || !profile) {
-        return {
-            success: false,
-            message: profileError?.message || "failed to fetch user profile",
-        }
-    }
-
-    return {
-        success: true,
-        data: profile
-    };
-}
+    }) as CustomResponse<Profile>;

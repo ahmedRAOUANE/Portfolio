@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getUser } from './utils/get-user';
-import { Profile } from './utils/types/profile';
 import { Routes } from './utils/types/routes';
+import { isUserAuthenticated } from './utils/validations';
 
 /* 
 * - All Valid Routes 
@@ -27,12 +26,11 @@ export async function middleware(request: NextRequest) {
         }
 
         // check authentication
-        const { success, data } = await getUser();
-        const profile = await data?.profile as Profile;
+        const { success, data } = await isUserAuthenticated();
+        const role = data?.role;
 
-        if (!success || !profile) {
+        if (!success || !role) {
             // check if unauthenticated users trying to access a protected route
-            // TODO: logout user first and then redirect
             if (isProtectedRoute(path, protectedRoutesForNonAuth)) {
                 return NextResponse.redirect(new URL(Routes.login, request.url))
             }
@@ -42,7 +40,7 @@ export async function middleware(request: NextRequest) {
 
         // check if authenticated users trying to access protected routes
         if (isProtectedRoute(path, protectedRoutesForAuth)) {
-            const isAdmin = profile.role === "admin";
+            const isAdmin = role === "admin";
             if (path.startsWith(Routes.admin) && !isAdmin) {
                 return NextResponse.redirect(new URL(Routes.home, request.url))
             }
