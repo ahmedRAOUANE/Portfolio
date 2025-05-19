@@ -1,0 +1,1 @@
+export interface UploadFileResponse { url: string, fileName: string }

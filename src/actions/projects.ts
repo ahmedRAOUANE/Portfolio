@@ -1,7 +1,7 @@
 "use server";
 
 import { check, isUserAuthenticated, withErrorHandling } from "@/utils/validations";
-import { uploadFile } from "@/utils/data/upload-file";
+import { uploadFile } from "@/utils/data/files-cruds";
 import { createClient } from "@/utils/supabase/server";
 import { Project } from "@/utils/types/project";
 import { CustomResponse } from "@/utils/types/response";
@@ -11,14 +11,14 @@ export const getProjects = async (): Promise<CustomResponse<Project[]>> => {
     return await withErrorHandling(async () => {
         const supabase = await createClient();
 
-        // check if the user is authenticated
-        const { success, data } = await isUserAuthenticated();
-        const role = data?.role as AllowedRoles;
+        // // check if the user is authenticated
+        // const { success, data } = await isUserAuthenticated();
+        // const role = data?.role as AllowedRoles;
 
-        check(success, "user not authenticated", "object");
+        // check(success, "user not authenticated", "object");
 
-        // Fetch projects based on user role
-        check(role === Roles.admin, "Admin not authorized - Only admins can access this route", "object");
+        // // Fetch projects based on user role
+        // check(role === Roles.admin, "Admin not authorized - Only admins can access this route", "object");
 
         const { data: projects, error } = await supabase
             .from("projects")

@@ -1,6 +1,7 @@
 import { getProjects } from "@/actions/projects";
 import { Project } from "@/utils/types/project";
 import Link from "next/link";
+import DeleteProject from "./delete-project";
 
 const OtherProjects = async () => {
     const { success, data } = await getProjects();
@@ -34,9 +35,9 @@ const OtherProjects = async () => {
                                     Description of the project.
                                 </p>
                             </div>
-                            < button className="text-red-500 hover:text-red-700" >
-                                Delete
-                            </button>
+                            {project.id !== undefined && (
+                                <DeleteProject id={project.id.toString()} />
+                            )}
                         </div>
                     ))}
             </div>

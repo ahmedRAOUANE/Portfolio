@@ -1,3 +1,4 @@
+import { UploadFileResponse } from "./file";
 
 export interface Project {
     id?: number;
@@ -5,6 +6,6 @@ export interface Project {
     created_at?: string;
     description: string;
     project_link: string;
-    image: string;
+    image: UploadFileResponse;
     is_active: string;
 }

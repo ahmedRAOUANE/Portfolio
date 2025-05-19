@@ -2,6 +2,7 @@
 
 import { baseUrl } from "@/utils/constansts";
 import { CustomResponse } from "@/utils/types/response";
+import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 
 const AddProject = () => {
@@ -12,6 +13,8 @@ const AddProject = () => {
     const isActiveRef = useRef<HTMLInputElement>(null);
 
     const [pending, setPending] = useState(false);
+
+    const router = useRouter();
 
     const handleAddProject = async (e: FormEvent): Promise<CustomResponse> => {
         e.preventDefault()
@@ -45,6 +48,8 @@ const AddProject = () => {
         if (result) {
             setPending(false);
         }
+
+        router.refresh();
 
         return {
             success: true,
