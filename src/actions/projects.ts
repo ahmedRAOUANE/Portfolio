@@ -6,20 +6,10 @@ import { createClient } from "@/utils/supabase/server";
 import { Project } from "@/utils/types/project";
 import { CustomResponse } from "@/utils/types/response";
 import { AllowedRoles, Roles } from "@/utils/types/roles";
+import { supabase } from "@/utils/supabase/client";
 
 export const getProjects = async (): Promise<CustomResponse<Project[]>> => {
     return await withErrorHandling(async () => {
-        const supabase = await createClient();
-
-        // // check if the user is authenticated
-        // const { success, data } = await isUserAuthenticated();
-        // const role = data?.role as AllowedRoles;
-
-        // check(success, "user not authenticated", "object");
-
-        // // Fetch projects based on user role
-        // check(role === Roles.admin, "Admin not authorized - Only admins can access this route", "object");
-
         const { data: projects, error } = await supabase
             .from("projects")
             .select();
