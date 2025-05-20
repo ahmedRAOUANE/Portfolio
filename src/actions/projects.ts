@@ -1,12 +1,13 @@
 "use server";
 
-import { check, isUserAuthenticated, withErrorHandling } from "@/utils/validations";
+import { check, checkUserAuthentication, isUserAuthenticated, withErrorHandling } from "@/utils/validations";
 import { uploadFile } from "@/utils/data/files-cruds";
 import { createClient } from "@/utils/supabase/server";
 import { Project } from "@/utils/types/project";
 import { CustomResponse } from "@/utils/types/response";
 import { AllowedRoles, Roles } from "@/utils/types/roles";
 import { supabase } from "@/utils/supabase/client";
+import { selectFrom } from "@/utils/data/data-cruds";
 
 export const getProjects = async (): Promise<CustomResponse<Project[]>> => {
     return await withErrorHandling(async () => {
@@ -21,6 +22,22 @@ export const getProjects = async (): Promise<CustomResponse<Project[]>> => {
             data: projects!,
         };
     }) as CustomResponse<Project[]>
+}
+
+export const getSingleProject = async (projectId: string): Promise<CustomResponse<Project>> => {
+    return await withErrorHandling(async () => {
+        // auth check
+        await checkUserAuthentication(Roles.admin);
+
+        // const serverSupabase = await createClient()
+        const { success, message, data } = await selectFrom("projects", "*", Roles.admin, { column: "id", value: projectId });
+        check(success, message || "Error getting single project", "object");
+
+        return {
+            success,
+            data
+        }
+    }) as CustomResponse<Project>
 }
 
 export const addProject = async (payload: FormData): Promise<CustomResponse> => {

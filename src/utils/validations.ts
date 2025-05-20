@@ -87,7 +87,7 @@ export const checkUserAuthentication = async (allowedRole: AllowedRoles): Promis
         const { success, data } = await isUserAuthenticated();
         const role = data?.role as AllowedRoles;
 
-        console.log("allowed role from checkUserAuthentication function: ", allowedRole)
+        // console.log("allowed role from checkUserAuthentication function: ", allowedRole)
         check(success, "autorization - user not authenticated", "object");
         check(role === allowedRole, `checkUserAuthentication Error: ${allowedRole} user not authenticated`, "object");
     });

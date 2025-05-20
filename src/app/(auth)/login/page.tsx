@@ -1,23 +1,37 @@
 "use client";
 
 import { login } from "@/actions/auth";
+import ActionBtn from "@/components/action-btn";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginPage() {
     const [error, setError] = useState<null | string>(null);
+    const [pending, setPending] = useState(false);
     const router = useRouter();
 
     const handleLogin = async (formData: FormData) => {
         setError(null);
-        const result = await login(formData)
+        setPending(true)
+        try {
+            const result = await login(formData)
 
-        if (!result.success) {
-            setError(result.message || "failed to login")
+            if (!result.success) {
+                setError(result.message || "failed to login")
+                return;
+            }
+
+            setPending(true)
+            router.push(result.data?.pathToRedirect as string)
+            return;
+        } catch (error: unknown) {
+            setPending(false);
+            if (error instanceof Error)
+                console.log(`Error logining in: ${error?.message}`)
+
+            return;
         }
-
-        router.push(result.data?.pathToRedirect as string)
     }
 
     return (
@@ -78,12 +92,12 @@ export default function LoginPage() {
                         </Link>
                     </div>
 
-                    <button
+                    <ActionBtn
                         type="submit"
-                        className="cursor-pointer w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                    >
-                        Sign in
-                    </button>
+                        className="w-full bg-primary"
+                        pending={pending}
+                        action={{ state1: "Login", state2: "Logining in.." }}
+                    />
                 </form>
             </div>
         </div>

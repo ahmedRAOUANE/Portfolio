@@ -9,6 +9,7 @@ type FilterOptions = {
     column: string;
     value: string;
 } | null;
+
 export const selectFrom = async (table: string, select?: string, forRole: AllowedRoles = "user", filter: FilterOptions = null): Promise<CustomResponse> => {
     return await withErrorHandling(async () => {
         await checkUserAuthentication(forRole!)
@@ -96,4 +97,28 @@ export const deleteFrom = async (table: string, rowId: string, forRole: AllowedR
         };
 
     }) as CustomResponse<DeleteResponse>;
+}
+
+export const updateIn = async (table: string, payload: unknown, forRole: AllowedRoles, filter: FilterOptions): Promise<CustomResponse<string>> => {
+    return await withErrorHandling(async () => {
+        // validate filter
+        check(!!filter, "Update Error: filter is required and must be a valid value", "object");
+
+        await checkUserAuthentication(forRole);
+
+        // check the row exists
+        const { success, message } = await selectFrom(table, "*", forRole, filter);
+        check(success, message || "Update row Error: The row you are trying to update can not be found", "object");
+
+        // update
+        const supabase = await createClient();
+
+        const { error } = await supabase.from(table).update(payload).eq(filter!.column, filter!.value)
+        check(!error, error?.message || "Update Error: an unknown error appeard while updaing..", "object");
+
+        return {
+            success: true,
+            data: "Update have been successfully completed"
+        }
+    }) as CustomResponse<string>
 }

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import ActionBtn from "../action-btn";
 
 const DeleteProject = ({id}: {id: string}) => {
     const [pending, startTransition] = useTransition();
@@ -14,23 +15,20 @@ const DeleteProject = ({id}: {id: string}) => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({id})
+                body: JSON.stringify({ id }),
+                credentials: "include"
             });
             router.refresh();
         })
     }
 
-    return (
-        <button
-            type="button" 
-            title="delete project" 
-            className="text-red-500 hover:text-red-700 cursor-pointer" 
-            onClick={handleDelete}
-            disabled={pending}
-        >
-            Delete
-        </button>
-    )
+    return <ActionBtn
+        onclick={handleDelete}
+        pending={pending}
+        action={{ state1: "delete", state2: "deleting..." }}
+        className="text-red-500 bg-red-400/20"
+        title="delete project"
+    />
 }
 
 export default DeleteProject;

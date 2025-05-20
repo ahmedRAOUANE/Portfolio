@@ -1,4 +1,12 @@
-const AdminProjectsPage = () => {
+import { getSingleProject } from "@/actions/projects";
+import UpdateProject from "@/components/admin-components/update-project";
+import { Project } from "@/utils/types/project";
+
+const AdminUpdateProjectPage = async ({ params }: { params: Promise<{ projectId: string }> }) => {
+    const { projectId } = await params;
+    const { success, data } = await getSingleProject(projectId)
+    const project = (Array.isArray(data) ? data[0] : data) as Project;
+
     return (
         <div className="flex flex-col items-center justify-center mt-20 p-4">
             <div className="flex flex-col items-center justify-center mb-8">
@@ -6,94 +14,21 @@ const AdminProjectsPage = () => {
 
                 <p className="text-md text-foreground-light mb-8">
                     Manage your project here.
-                </p>
+                </p> 
             </div>
 
-            <div className="w-full flex gap-6 ">
-                <div className="w-full rounded-lg shadow-md max-w-96">
-                    <h2 className="text-2xl font-bold mb-4">Update Project</h2>
+            <div className="w-full">
+                {!success && (
+                    <div>
+                        <h2>No project found</h2>
+                        <p>it seems theres an error fetching the project data or no project found</p>
+                    </div>
+                )}
 
-                    <form className="w-full flex flex-col gap-6">
-                        <div>
-                            <label
-                                htmlFor="projectName"
-                                className="hidden"
-                            >
-                                Project Name
-                            </label>
-                            <input
-                                placeholder="Project Name"
-                                type="text"
-                                id="projectName"
-                                name="projectName"
-                                required
-                                className="w-full p-2 rounded-lg text-foreground bg-dark"
-                            />
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="description"
-                                className="hidden"
-                            >
-                                Description
-                            </label>
-                            <textarea
-                                placeholder="description"
-                                id="description"
-                                name="description"
-                                rows={4}
-                                required
-                                className="w-full p-2 bg-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            ></textarea>
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="link"
-                                className="hidden"
-                            >
-                                Link/URL
-                            </label>
-                            <input
-                                placeholder="Project Link/URL"
-                                type="url"
-                                id="link"
-                                name="link"
-                                required
-                                className="w-full p-2 bg-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                            />
-                        </div>
-
-                        <div className="mb-6">
-                            <label
-                                htmlFor="image"
-                                className="hidden"
-                            >
-                                Image
-                            </label>
-                            <input
-                                placeholder="Project Image"
-                                type="file"
-                                id="image"
-                                name="image"
-                                accept="image/*"
-                                required
-                                className="w-full p-2 bg-dark rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-dark file:bg-light file:text-dark hover:file:bg-secondary-light cursor-pointer"
-                            />
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="w-full p-2 bg-primary rounded-lg cursor-pointer"
-                        >
-                            Save Project
-                        </button>
-                    </form>
-                </div>
+                {success && <UpdateProject project={project} />}
             </div>
         </div>
     );
 };
 
-export default AdminProjectsPage;
+export default AdminUpdateProjectPage;

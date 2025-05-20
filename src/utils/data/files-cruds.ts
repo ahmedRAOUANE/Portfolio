@@ -4,6 +4,13 @@ import { check, checkUserAuthentication, withErrorHandling } from "../validation
 import { Roles } from "../types/roles";
 import { UploadFileResponse } from "../types/file";
 
+/**
+ * 
+ * @param {File} file 
+ * @param {string} bucketId 
+ * @param {string} path 
+ * @returns {Promise<CustomResponse<UploadFileResponse>>}
+ */
 export const uploadFile = async (file: File, bucketId: string, path: string): Promise<CustomResponse<UploadFileResponse>> =>
     await withErrorHandling(async () => {
         // validate file, bucketId, path
@@ -49,10 +56,10 @@ export const uploadFile = async (file: File, bucketId: string, path: string): Pr
 
 /**
  * 
- * @param bucketId 
- * @param path 
- * @param fileName 
- * @returns 
+ * @param {string} bucketId 
+ * @param {string} path 
+ * @param {string} fileName 
+ * @returns {Promise<CustomResponse>}
  */
 export const deleteFile = async (bucketId: string, path: string, fileName: string): Promise<CustomResponse> => {
     return await withErrorHandling(async () => {
@@ -75,4 +82,29 @@ export const deleteFile = async (bucketId: string, path: string, fileName: strin
             data
         }
     }) as CustomResponse;
+}
+
+/**
+ * this function deletes the pld file and upload the new one
+ * @param {File} file 
+ * @param {string} buckedId 
+ * @param {string} path 
+ * @param {string} fileName 
+ * @returns {Promise<CustomResponse<UploadFileResponse>>}
+ */
+export const updateFile = async (file: File, buckedId: string, path: string, fileName: string): Promise<CustomResponse<UploadFileResponse>> => {
+    return await withErrorHandling(async () => {
+        check(!!file || !!buckedId || !!path || !!fileName, "Error updating file: validation error", "object");
+
+        const { success: deleteSuccess, message: DeleteErrorMessage } = await deleteFile(buckedId, path, fileName);
+        check(deleteSuccess, DeleteErrorMessage || "Error Updating file: and error occured while deleting file", "object");
+
+        const { success, message, data } = await uploadFile(file, buckedId, path);
+        check(success, message || "Error updating file: an error occured while uploading file!", "object");
+
+        return {
+            success,
+            data
+        }
+    }) as CustomResponse<UploadFileResponse>;
 }

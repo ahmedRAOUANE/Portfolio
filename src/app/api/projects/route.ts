@@ -10,6 +10,17 @@ import { Routes } from "@/utils/types/routes";
 import { baseUrl } from "@/utils/constansts";
 import { UploadFileResponse } from "@/utils/types/file";
 
+// Handle CORS
+const corsHeaders = {
+    'Access-Control-Allow-Origin': `${baseUrl}`,
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
+export const OPTIONS = async () => {
+    return NextResponse.json({}, { headers: corsHeaders })
+}
+
 /** GET All Projects */
 export const GET = async () => {
     // check if the user is authenticated
@@ -43,7 +54,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse<CustomRes
         name: formData.get("projectName") as string,
         description: formData.get("description") as string,
         project_link: formData.get("link") as string,
-        is_active: formData.get("isActive") as string,
+        is_active: !!formData.get("isActive"),
         image: {
             url,
             fileName

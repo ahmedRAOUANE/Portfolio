@@ -7,5 +7,5 @@ export interface Project {
     description: string;
     project_link: string;
     image: UploadFileResponse;
-    is_active: string;
+    is_active: boolean;
 }
