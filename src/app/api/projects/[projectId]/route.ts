@@ -4,7 +4,7 @@ import { UploadFileResponse } from "@/utils/types/file";
 import { Project } from "@/utils/types/project";
 import { CustomResponse } from "@/utils/types/response";
 import { Roles } from "@/utils/types/roles";
-import { check, checkUserAuthentication, withErrorHandling } from "@/utils/validations";
+import { checkForError as check, checkUserAuthentication, withErrorHandling } from "@/utils/validations";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest, { params }: { params: Promise<{ projectId: string }> }): Promise<NextResponse<CustomResponse>> => {

@@ -1,6 +1,6 @@
 import { CustomResponse } from "../types/response";
 import { createClient } from "../supabase/server";
-import { check, checkUserAuthentication, withErrorHandling } from "../validations";
+import { checkForError, checkUserAuthentication, withErrorHandling } from "../validations";
 import { Roles } from "../types/roles";
 import { UploadFileResponse } from "../types/file";
 
@@ -14,7 +14,7 @@ import { UploadFileResponse } from "../types/file";
 export const uploadFile = async (file: File, bucketId: string, path: string): Promise<CustomResponse<UploadFileResponse>> =>
     await withErrorHandling(async () => {
         // validate file, bucketId, path
-        check(!!file || !!bucketId || !!path, "Upload file Error: buckedId or path or file is not vlid!", "object");
+        checkForError(!!file || !!bucketId || !!path, "Upload file Error > uploadFile > validation: buckedId or path or file is not vlid!", "object");
 
         // check user authentication
         await checkUserAuthentication(Roles.admin);
@@ -23,7 +23,7 @@ export const uploadFile = async (file: File, bucketId: string, path: string): Pr
 
         // validate file type
         const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-        check(ALLOWED_TYPES.includes(file.type), "Invalid file type. Only JPEG, PNG, and WebP are allowed", "object")
+        checkForError(ALLOWED_TYPES.includes(file.type), "upload file Error > uploadFile > validation: Invalid file type. Only JPEG, PNG, and WebP are allowed", "object")
 
         // Sanitize filename - remove spaces and special characters
         const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
@@ -37,13 +37,13 @@ export const uploadFile = async (file: File, bucketId: string, path: string): Pr
                 upsert: true,
             });
 
-        check(!error, error?.message || "Error uploading file", "object")
+        checkForError(!error, `upload file Error > uploadFile: ${error?.message || "Error uploading file"}`, "object")
 
         const { data: { publicUrl } } = supabase.storage
             .from(bucketId)
             .getPublicUrl(data!.path);
 
-        check(!!publicUrl, "Error Getting public Url", "object")
+        checkForError(!!publicUrl, "upload file Error > uploadFile: Error Getting public Url", "object")
 
         return {
             success: true,
@@ -64,7 +64,7 @@ export const uploadFile = async (file: File, bucketId: string, path: string): Pr
 export const deleteFile = async (bucketId: string, path: string, fileName: string): Promise<CustomResponse> => {
     return await withErrorHandling(async () => {
         // validate bucketId, path, fileName
-        check(!!bucketId || !!path || !!fileName, "Delete file Error: buckedId or path or fileName is not vlid!", "object");
+        checkForError(!!bucketId || !!path || !!fileName, "Delete file Error > deleteFile > validation: buckedId or path or fileName is not vlid!", "object");
         
         await checkUserAuthentication(Roles.admin);
 
@@ -75,7 +75,7 @@ export const deleteFile = async (bucketId: string, path: string, fileName: strin
             .from(bucketId)
             .remove([`${path}/${fileName}`])
 
-        check(!error, `Error Deleting File: ${error?.message || "Something went wrong, check your logic or permissions"}`, "object");
+        checkForError(!error, `Deleting File Error > deleteFile: ${error?.message || "Something went wrong, check your logic or permissions"}`, "object");
 
         return {
             success: true,
@@ -94,13 +94,13 @@ export const deleteFile = async (bucketId: string, path: string, fileName: strin
  */
 export const updateFile = async (file: File, buckedId: string, path: string, fileName: string): Promise<CustomResponse<UploadFileResponse>> => {
     return await withErrorHandling(async () => {
-        check(!!file || !!buckedId || !!path || !!fileName, "Error updating file: validation error", "object");
+        checkForError(!!file || !!buckedId || !!path || !!fileName, "updating file Error > updateFile: validation error", "object");
 
         const { success: deleteSuccess, message: DeleteErrorMessage } = await deleteFile(buckedId, path, fileName);
-        check(deleteSuccess, DeleteErrorMessage || "Error Updating file: and error occured while deleting file", "object");
+        checkForError(deleteSuccess, `updating file Error > updateFile > deleteFile: ${DeleteErrorMessage || "an error occured while deleting file!"}`, "object");
 
         const { success, message, data } = await uploadFile(file, buckedId, path);
-        check(success, message || "Error updating file: an error occured while uploading file!", "object");
+        checkForError(success, `updating file Error > updateFile > uploadFile: ${message || "an error occured while uploading file!"}`, "object");
 
         return {
             success,

@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import { CustomResponse } from '@/utils/types/response';
 import { Roles } from '@/utils/types/roles';
 import { Routes } from '@/utils/types/routes';
-import { check, withErrorHandling } from '@/utils/validations';
+import { checkForError as check, withErrorHandling } from '@/utils/validations';
 
 export async function login(formData: FormData): Promise<CustomResponse<{ pathToRedirect: string }>> {
     const email = formData.get('email') as string;

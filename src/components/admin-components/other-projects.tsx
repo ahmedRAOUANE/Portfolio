@@ -1,24 +1,33 @@
-import { getProjects } from "@/actions/projects";
+"use client";
+
 import { Project } from "@/utils/types/project";
 import Link from "next/link";
 import DeleteProject from "./delete-project";
+import { baseUrl } from "@/utils/constansts";
+import { useEffect, useState } from "react";
 
-const OtherProjects = async () => {
-    const { success, data } = await getProjects();
-    const otherProjects: Project[] = Array.isArray(data) ? data : [];
+const OtherProjects = () => {
+    const [otherProjects, setOtherProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            const res = await fetch(`${baseUrl}/api/projects`);
+            const { data }: { data: Project[] } = await res.json();
+            setOtherProjects(data);
+        };
+        fetchProjects();
+    }, []);
 
     return (
         <div className="w-full rounded-lg shadow-md" >
             <h2 className="text-2xl font-bold mb-4" > Other Projects </h2>
 
             < div className="flex flex-col gap-4 mt-4" >
-                {(!success || !otherProjects || otherProjects.length === 0) && (
+                {(!otherProjects || otherProjects.length === 0) ? (
                     <p className="text-md text-foreground-light" >
                         No projects available.
                     </p>
-                )}
-
-                {
+                ) : (
                     otherProjects.map((project) => (
                         <div
                             key={project.id}
@@ -39,7 +48,8 @@ const OtherProjects = async () => {
                                 <DeleteProject id={project.id.toString()} />
                             )}
                         </div>
-                    ))}
+                    ))
+                )}
             </div>
         </div>
     )

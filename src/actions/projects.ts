@@ -1,27 +1,32 @@
 "use server";
 
-import { check, checkUserAuthentication, isUserAuthenticated, withErrorHandling } from "@/utils/validations";
+import { checkForError as check, checkUserAuthentication, isUserAuthenticated, withErrorHandling } from "@/utils/validations";
 import { uploadFile } from "@/utils/data/files-cruds";
 import { createClient } from "@/utils/supabase/server";
 import { Project } from "@/utils/types/project";
 import { CustomResponse } from "@/utils/types/response";
 import { AllowedRoles, Roles } from "@/utils/types/roles";
-import { supabase } from "@/utils/supabase/client";
 import { selectFrom } from "@/utils/data/data-cruds";
+import { FilterOptions } from "@/utils/types/filter";
 
-export const getProjects = async (): Promise<CustomResponse<Project[]>> => {
-    return await withErrorHandling(async () => {
-        const { data: projects, error } = await supabase
-            .from("projects")
-            .select();
+//! this function is deprecated, use fetch request instead
+export const getProjects = async (forRole: AllowedRoles, filter?: FilterOptions): Promise<CustomResponse<Project[]>> => {
+    const { success, message, data } = await selectFrom("projects", "*", forRole, filter) //! this line does not work due to header/coockies issue
+// let query = supabase.from("projects").select("*")
 
-        check(!error, "Error fetching projects", "object")
+// if (filter) {
+//     query = query.eq(filter.column, filter.value)
+// }
+// const { data, error } = await query;
 
-        return {
-            success: true,
-            data: projects!,
-        };
-    }) as CustomResponse<Project[]>
+    check(success, message || "Error fetching projects", "object")
+
+    return {
+        success: true,
+        data: data as Project[],
+    };
+    // return await withErrorHandling(async () => {
+    // }) as CustomResponse<Project[]>
 }
 
 export const getSingleProject = async (projectId: string): Promise<CustomResponse<Project>> => {

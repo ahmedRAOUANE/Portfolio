@@ -3,21 +3,24 @@ import { supabase as supabaseClient } from "./supabase/client";
 import { createClient } from "./supabase/server";
 import { CustomResponse } from "./types/response";
 import { Profile } from "./types/profile";
-import { check, withErrorHandling } from "./validations";
+import { checkForError, withErrorHandling } from "./validations";
 
 export const getUser = async (): Promise<CustomResponse<{ user: User; profile: Profile }>> => {
     return await withErrorHandling(async () => {
         const supabaseServer = await createClient();
 
-        const { data: { user }, error: authError } = await supabaseServer.auth.getUser();
+        const { data: { user } } = await supabaseServer.auth.getUser();
 
-        check(authError === null, "Authentication Error - can not get User", "object");
-
-        check(user !== null, "no user found", "object");
+        if (!user) {
+            return {
+                success: true,
+                data: null
+            }
+        }
 
         const { success, message, data: profile } = await getUsersProfile(user!);
 
-        check(success, message || "get profile error", "object");
+        checkForError(success, `Authentication Error - getUser: ${message || "can not get User Profile"}`, "object");
 
         return {
             success: true,
@@ -37,7 +40,7 @@ export const getUsersProfile = async (user: User): Promise<CustomResponse<Profil
             .eq("id", user.id)
             .single();
 
-        check(profileError !== null || profile !== null, profileError?.message || "failed to fetch user profile!", "object");
+        checkForError(!!profileError || !!profile, profileError?.message || "failed to fetch user profile!", "object");
 
         return {
             success: true,

@@ -1,5 +1,6 @@
 export enum Roles {
     admin = "admin",
-    user = "user"
+    user = "user",
+    anone = "anone"
 }
 export type AllowedRoles = `${Roles}`;

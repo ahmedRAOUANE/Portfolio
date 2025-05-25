@@ -7,13 +7,14 @@ import { NextResponse } from "next/server";
 import { getUser } from "./get-user";
 import { Profile } from "./types/profile";
 import { CustomResponse } from "./types/response";
-import { logout } from "@/actions/auth";
+// import { logout } from "@/actions/auth";
 import { AllowedRoles, Roles } from "./types/roles";
 
 
 
 /**
- * Throws an error response or object when success is false
+ * Throws an error response or error object when success is false
+ * use only when the failed operation throws an error
  * @param success 
  *      - required 
  *      - string 
@@ -26,9 +27,9 @@ import { AllowedRoles, Roles } from "./types/roles";
  * @throws returns === "response" ? NextResponse.json({data}, {status}) : data
  * @returns void
  */
-export function check(success: boolean, message: string, returns: "response", status: number): ReturnType<typeof NextResponse.json>
-export function check(success: boolean, message: string, returns: "object", status?: number): CustomResponse
-export function check(success: boolean, message: string, returns: "response" | "object", status?: number): CustomResponse | ReturnType<typeof NextResponse.json> | void {
+export function checkForError(success: boolean, message: string, returns: "response", status: number): ReturnType<typeof NextResponse.json>
+export function checkForError(success: boolean, message: string, returns: "object", status?: number): CustomResponse
+export function checkForError(success: boolean, message: string, returns: "response" | "object", status?: number): CustomResponse | ReturnType<typeof NextResponse.json> | void {
     if (!success) {
         console.error(message)
 
@@ -37,7 +38,8 @@ export function check(success: boolean, message: string, returns: "response" | "
             message
         }
 
-        throw returns === "response" ? NextResponse.json({ data }, { status }) : data
+        throw returns === "response" ? NextResponse.json({ data }, { status }) : new Error(data.message)
+        // throw returns === "response" ? NextResponse.json({ data }, { status }) : data
     }
 }
 
@@ -49,20 +51,24 @@ export function check(success: boolean, message: string, returns: "response" | "
  * @param fn 
  * @returns 
  */
-export const withErrorHandling = async <T>(fn: () => Promise<T>): Promise<T | CustomResponse | NextResponse> => {
+export const withErrorHandling = async <T>(fn: () => Promise<T>): Promise<T | NextResponse | Error> => {
     try {
         return await fn();
     } catch (error: unknown) {
         console.error("Error: ", error);
 
-        if (error instanceof NextResponse) {
-            return error;
+        const data = {
+            success: false,
+            message: error instanceof Error ? error.message : "Unknown error"
         }
 
-        return {
-            success: false,
-            message: (error as Error).message || "Unexpected error Appeared"
+        if (error instanceof NextResponse) {
+            return NextResponse.json(data, { status: error.status });
+        } else if (error instanceof Error) {
+            throw new Error(error.message)
         }
+
+        throw data
     }
 }
 
@@ -79,19 +85,18 @@ const allowedRoles: AllowedRoles[] = Object.values(Roles)
  * @param allowedRole "admin" | "user"
  * @returns Promise<CustomResponse | NextResponse | void>
  */
-export const checkUserAuthentication = async (allowedRole: AllowedRoles): Promise<CustomResponse | NextResponse | void> =>
-    await withErrorHandling(async () => {
-        check(!!allowedRole || !allowedRoles.includes(allowedRole), "authorization - role must be valid 'admin' or 'user'", "object")
+export const checkUserAuthentication = async (allowedRole: AllowedRoles): Promise<CustomResponse | NextResponse | void> => {
+    checkForError(!!allowedRole || !allowedRoles.includes(allowedRole), "authorization > checkUserAuthentication > validation - role must be valid 'admin' or 'user'", "object")
 
-        // check if user is authenticated
-        const { success, data } = await isUserAuthenticated();
-        const role = data?.role as AllowedRoles;
+    // check if user is authenticated
+    const { success, data, message } = await isUserAuthenticated();
+    const role = data?.role as AllowedRoles;
 
-        // console.log("allowed role from checkUserAuthentication function: ", allowedRole)
-        check(success, "autorization - user not authenticated", "object");
-        check(role === allowedRole, `checkUserAuthentication Error: ${allowedRole} user not authenticated`, "object");
-    });
-
+    checkForError(success, `authorization Error > checkUserAuthentication > isUserAuthenticated: ${message || "user not authenticated"}`, "object");
+    checkForError(role === allowedRole, `autorization Error > checkUserAuthentication: ${allowedRole} not authenticated`, "object");
+    // return await withErrorHandling(async () => {
+    // }) as CustomResponse | NextResponse | void;
+}
 
 
 /**
@@ -99,24 +104,26 @@ export const checkUserAuthentication = async (allowedRole: AllowedRoles): Promis
  * - logs out the user if the returned data (user, profile) invalid or error occures when getting the user data
  * @returns Promise<CustomResponse<{ role: string }>>
  */
-export const isUserAuthenticated = async (): Promise<CustomResponse<{ role: AllowedRoles }>> =>
-    await withErrorHandling(async () => {
-        const { success, message, data } = await getUser();
-        const user = await data?.user;
-        const profile = await data?.profile as Profile;
+export const isUserAuthenticated = async (): Promise<CustomResponse<{ role: AllowedRoles }>> => {
+    const { success, message, data: userData } = await getUser();
+    const profile = await userData?.profile as Profile;
 
-        if (!success || !user || !profile) {
-            await logout(); // assuimng that all normal authenticated users have a profile
-            return {
-                success: false,
-                message: message || "User not authenticated",
-            };
-        }
+    checkForError(success, `isUserAuthenticated Error: ${message || "user not authenticated"}`, "object");
 
+    if (!userData) {
+        // await logout(); // assuimng that all normal authenticated users have a profile
         return {
             success: true,
-            data: {
-                role: profile?.role,
-            }
+            message: "user not authenticated"
         };
-    }) as CustomResponse<{ role: AllowedRoles }>;
+    }
+
+    return {
+        success: true,
+        data: {
+            role: profile?.role,
+        }
+    };
+    // return await withErrorHandling(async () => {
+    // }) as CustomResponse<{ role: AllowedRoles }>;
+}

@@ -1,24 +1,24 @@
-import { check, checkUserAuthentication, withErrorHandling } from "../validations";
+import { checkForError as check, checkUserAuthentication, withErrorHandling } from "../validations";
 import { createClient } from "../supabase/server";
 import { CustomResponse } from "../types/response";
 import { AllowedRoles, Roles } from "../types/roles";
 import { Project } from "../types/project";
 import { deleteFile } from "./files-cruds";
+import { FilterOptions } from "../types/filter";
 
-type FilterOptions = {
-    column: string;
-    value: string;
-} | null;
-
-export const selectFrom = async (table: string, select?: string, forRole: AllowedRoles = "user", filter: FilterOptions = null): Promise<CustomResponse> => {
+export const selectFrom = async (table: string, select: string, forRole: AllowedRoles, filter?: FilterOptions): Promise<CustomResponse> => {
     return await withErrorHandling(async () => {
-        await checkUserAuthentication(forRole!)
+        check(!!table && !!select && !!forRole, "Selection Error > validation: Some required parameters are invalid", "object")
+        
+        if (forRole !== Roles.anone) {
+            await checkUserAuthentication(forRole)
+        }
 
-        const supabase = await createClient();
+        const supabase = await createClient()
 
         let query = supabase
             .from(table)
-            .select(select);
+            .select(select ? select : "*");
 
         if (filter) {
             query = query.eq(filter.column, filter.value)
@@ -26,7 +26,7 @@ export const selectFrom = async (table: string, select?: string, forRole: Allowe
 
         const { data, error } = await query;
 
-        check(!error, error?.message || `Error select from table ${table}`, "object");
+        check(!error, `selection Error > selectFrom ${table}: ${error?.message || "Error select from table"}`, "object");
 
         return {
             success: true,
@@ -35,24 +35,24 @@ export const selectFrom = async (table: string, select?: string, forRole: Allowe
     }) as CustomResponse
 }
 
-export const insertIn = async (table: string, payload: unknown, select?: string, forRole: AllowedRoles = "user"): Promise<CustomResponse> => {
-    return await withErrorHandling(async () => {
-        await checkUserAuthentication(forRole);
+export const insertIn = async (table: string, payload: unknown, select: string, forRole: AllowedRoles): Promise<CustomResponse> => {
+    check(!!table && !!payload && !!select && !!forRole, `insertion Error > insertIn > validation: some required parameters are missing`, "object")
+    
+    await checkUserAuthentication(forRole);
 
-        const supabase = await createClient();
+    const supabase = await createClient();
 
-        const { data: insertData, error } = await supabase
-            .from(table)
-            .insert([payload])
-            .select(select);
+    const { data: insertData, error } = await supabase
+        .from(table)
+        .insert([payload])
+        .select(select);
 
-        check(!error, error?.message || `faled to insert in table ${table}`, "object")
+    check(!error, `insertion Error > insertIn ${table}: ${error?.message || "faled to insert in table"}`, "object")
 
-        return {
-            success: true,
-            data: insertData
-        }
-    }) as CustomResponse
+    return {
+        success: true,
+        data: insertData
+    }
 }
 
 interface DeleteResponse {
@@ -62,12 +62,14 @@ interface DeleteResponse {
 
 export const deleteFrom = async (table: string, rowId: string, forRole: AllowedRoles): Promise<CustomResponse<DeleteResponse>> => {
     return await withErrorHandling(async () => {
+        check(!!table && !!rowId && !!forRole, `deleting Error > deletFrom > validation: some required parameters are invalid!`, "object");
+
         await checkUserAuthentication(forRole);
 
         // check row existing
         const {data} = await selectFrom(table, "*", Roles.admin, { column: "id", value: rowId });
 
-        check(!!data, "Error Deleting row: the specified can not be found, check your logic or permissions", "object")
+        check(!!data, "deleting Error > deletFrom: the specified can not be found, check your logic or permissions", "object")
 
         // in order to delete related files: get and delet image only if trying to delete from projects table
         if (Array.isArray(data) && data.length > 0 && (data as Project[])[0]?.image?.fileName) {
@@ -75,7 +77,7 @@ export const deleteFrom = async (table: string, rowId: string, forRole: AllowedR
     
             // delete the image related with project
             const { success: deletingImageSuccess, message } = await deleteFile("projects", "images", fileName);
-            check(deletingImageSuccess, message || "Error deleting row: it appears there is an error while deleting the image", "object");
+            check(deletingImageSuccess, `deleting Error > deleteFrom: ${message || "it appears there is an error while deleting the image"}`, "object");
         }
 
         const supabase = await createClient();
@@ -85,8 +87,8 @@ export const deleteFrom = async (table: string, rowId: string, forRole: AllowedR
             .delete()
             .eq("id", rowId);
 
-        check(!error, "Deleting: something went wrong!, check your delete logic or your access permissions", "object");
-        check(status === 204, "Deleting: something went wrong!, response status does not match the success status", "object");
+        check(!error, "Deleting Error: something went wrong!, check your delete logic or your access permissions", "object");
+        check(status === 204, "Deleting Error: something went wrong!, response status does not match the success status", "object");
 
         return {
             success: true,
@@ -102,19 +104,19 @@ export const deleteFrom = async (table: string, rowId: string, forRole: AllowedR
 export const updateIn = async (table: string, payload: unknown, forRole: AllowedRoles, filter: FilterOptions): Promise<CustomResponse<string>> => {
     return await withErrorHandling(async () => {
         // validate filter
-        check(!!filter, "Update Error: filter is required and must be a valid value", "object");
+        check(!!table || !!payload || !!forRole || !!filter, "Update Error > updateIn > validation: some required parameters are invalid", "object");
 
         await checkUserAuthentication(forRole);
 
         // check the row exists
         const { success, message } = await selectFrom(table, "*", forRole, filter);
-        check(success, message || "Update row Error: The row you are trying to update can not be found", "object");
+        check(success, message || "Update Error > selectFrom: The row you are trying to update can not be found", "object");
 
         // update
         const supabase = await createClient();
 
         const { error } = await supabase.from(table).update(payload).eq(filter!.column, filter!.value)
-        check(!error, error?.message || "Update Error: an unknown error appeard while updaing..", "object");
+        check(!error, `update Error: ${error?.message || "an unknown error appeard while updaing.."}`, "object");
 
         return {
             success: true,
