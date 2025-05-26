@@ -39,7 +39,7 @@ const Header = () => {
     }
 
     return (
-        <header className="bg-dark backdrop-blur p-4 shadow-md fixed top-0 w-full z-10 flex gap-4 items-center">
+        <header className="backdrop-blur p-4 shadow-md fixed top-0 w-full z-10 flex gap-4 items-center">
             <button
                 title="Toggle Sidebar"
                 className="text-foreground-xl hover:text-accent transition-colors duration-200 cursor-pointer md:hidden"

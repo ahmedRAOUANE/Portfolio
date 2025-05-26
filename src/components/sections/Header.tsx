@@ -26,7 +26,12 @@ const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
             <ul className={className}>
                 {headerLinks.map((link) => (
                     <li key={link.href}>
-                        <Link href={link.href} className='cursor-pointer'>{link.label}</Link>
+                        <Link
+                            href={link.href}
+                            className='cursor-pointer hover:text-primary transition-colors duration-300 font-medium'
+                        >
+                            {link.label}
+                        </Link>
                     </li>
                 ))}
                 <LogoutBtn />
@@ -34,26 +39,40 @@ const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
         </nav>
     )
 }
+
 const Header = () => {
     return (
         <header className="p-4 sticky top-0 left-0 right-0 z-50">
-            <div className="container mx-auto p-1 lg:max-w-5xl bg-dark backdrop-blur border-b border-[var(--foreground)] rounded-full shadow-lg">
+            <div className="container mx-auto p-1 lg:max-w-5xl bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300">
                 <div className="flex justify-between items-center pe-1 md:pe-4">
                     {/* Logo */}
                     <div className="flex-shrink-0">
-                        <Link href="#" className="text-xl font-bold bg-primary rounded-full flex items-center justify-center">
-                            <Image src="/logo.svg" alt="Logo" width={32} height={32} className='w-10 h-10 rounded-full' />
+                        <Link
+                            href="#"
+                            className="text-xl font-bold bg-primary/30 hover:bg-primary/40 text-foreground rounded-full flex items-center justify-center transition-all duration-300"
+                        >
+                            <Image
+                                src="/logo.svg"
+                                alt="Logo"
+                                width={40}
+                                height={40}
+                                className='w-10 h-10 rounded-full'
+                                priority
+                                unoptimized
+                                blurDataURL='/logo.svg'
+                                placeholder='blur'
+                            />
                         </Link>
                     </div>
 
                     {/* Desktop Navigation */}
-                    <NavLinks className="hidden md:flex gap-4" />
+                    <NavLinks className="hidden md:flex gap-6 text-foreground" />
 
                     {/* Mobile Navigation Button */}
                     <div className="md:hidden">
                         <button
                             type="button"
-                            className="cursor-pointer inline-flex items-center justify-center p-2 rounded-lg text-primary"
+                            className="cursor-pointer inline-flex items-center justify-center p-2 rounded-lg text-primary hover:bg-primary/20 transition-all duration-300"
                             onClick={() => document.getElementById('mobile-menu')?.classList.toggle('hidden')}
                         >
                             <span className="sr-only">Open main menu</span>
@@ -65,7 +84,10 @@ const Header = () => {
                 </div>
 
                 {/* Mobile Navigation Menu */}
-                <NavLinks className="p-3 flex flex-col gap-4 md:hidden absolute right-0 left-0 top-16 z-20 animate-fade-out bg-light backdrop-blur border-b border-[var(--foreground)] rounded-3xl shadow-lg" id="mobile-menu" />
+                <NavLinks
+                    className="p-4 flex flex-col gap-4 md:hidden absolute right-0 left-0 top-16 z-20 bg-primary/5 backdrop-blur border border-primary/30 rounded-3xl shadow-lg"
+                    id="mobile-menu"
+                />
             </div>
         </header>
     )

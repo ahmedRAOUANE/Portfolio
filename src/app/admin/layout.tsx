@@ -1,5 +1,5 @@
 import Header from "@/components/admin-components/header";
-import Footer from "@/components/sections/footer";
+// import Footer from "@/components/sections/footer";
 import { Routes } from "@/utils/types/routes";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                         <li><Link href={`${Routes.admin}/settings`} className="hover:underline">Settings</Link></li>
                     </ul>
 
-                    <Footer className="text-xs-light-center" />
+                    {/* <Footer /> */}
                 </div>
             </nav>
 

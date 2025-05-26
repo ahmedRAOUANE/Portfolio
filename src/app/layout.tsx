@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`dark bg-background text-foreground`}
+        className={`light bg-background text-foreground`}
       >
         {children}
       </body>
