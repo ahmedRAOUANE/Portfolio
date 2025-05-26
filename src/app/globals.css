@@ -1,217 +1,60 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --background: rgba(255, 255, 255, 1);
-    --foreground: rgba(0, 0, 0, 1);
-    --primary: rgba(0, 123, 255, 1);
-    --secondary: rgba(108, 117, 125, 1);
-    --success: rgba(40, 167, 69, 1);
-    --danger: rgba(220, 53, 69, 1);
-    --warning: rgba(255, 193, 7, 1);
-    --info: rgba(23, 162, 184, 1);
-    --light: rgba(248, 249, 250, 1);
-    --dark: rgb(70, 70, 70);
-  }
+@theme {
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  --color-primary: #2563eb;
+  --color-secondary: #7c3aed;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-warning: #d97706;
+  --color-info: #0284c7;
+  --color-light: #4b5563;
+  --color-dark: #111827;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: rgba(18, 18, 18, 1);
-    --foreground: rgba(255, 255, 255, 1);
-    --primary: rgba(187, 134, 252, 1);
-    --secondary: rgba(3, 218, 198, 1);
-    --success: rgba(76, 175, 80, 1);
-    --danger: rgba(244, 67, 54, 1);
-    --warning: rgba(255, 235, 59, 1);
-    --info: rgba(33, 150, 243, 1);
-    --light: rgba(189, 189, 189, 1);
-    --dark: rgb(70,70, 70);
+    --color-background: #121212;
+      --color-foreground: #ffffff;
+      --color-primary: #bb86fc;
+      --color-secondary: #03dac6;
+      --color-success: #4caf50;
+      --color-danger: #f44336;
+      --color-warning: #ffeb3b;
+      --color-info: #2196f3;
+      --color-light: #bdbdbd;
+      --color-dark: #464646;
   }
 }
 
-* {
+body {
   @apply transition-all duration-300 ease-in-out;
 }
 
+.light {
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  --color-primary: #2563eb;
+  --color-secondary: #7c3aed;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-warning: #d97706;
+  --color-info: #0284c7;
+  --color-light: #4b5563;
+  --color-dark: #111827;
+}
+
 .dark {
-  --background: rgba(18, 18, 18, 1);
-  --foreground: rgba(255, 255, 255, 1);
-  --primary: rgba(187, 134, 252, 1);
-  --secondary: rgba(3, 218, 198, 1);
-  --success: rgba(76, 175, 80, 1);
-  --danger: rgba(244, 67, 54, 1);
-  --warning: rgba(255, 235, 59, 1);
-  --info: rgba(33, 150, 243, 1);
-  --light: rgba(189, 189, 189, 1);
-  --dark: rgba(147, 147, 147, 0.55);
+  --color-background: #121212;
+  --color-foreground: #ffffff;
+  --color-primary: #bb86fc;
+  --color-secondary: #03dac6;
+  --color-success: #4caf50;
+  --color-danger: #f44336;
+  --color-warning: #ffeb3b;
+  --color-info: #2196f3;
+  --color-light: #bdbdbd;
+  --color-dark: #464646;
 }
 
-/* Text */
-@layer components {
-  /* Sizes */
-  [class^="text-"][class*="-sm"] {
-    @apply text-sm;
-  }
-  [class^="text-"][class*="-md"] {
-    @apply text-base;
-  }
-  [class^="text-"][class*="-lg"] {
-    @apply text-lg;
-  }
-  [class^="text-"][class*="-xl"] {
-    @apply text-xl;
-  }
-  [class^="text-"][class*="-2xl"] {
-    @apply text-2xl;
-  }
-  [class^="text-"][class*="-3xl"] {
-    @apply text-3xl;
-  }
-  [class^="text-"][class*="-4xl"] {
-    @apply text-4xl;
-  }
-  [class^="text-"][class*="-5xl"] {
-    @apply text-5xl;
-  }
-  [class^="text-"][class*="-6xl"] {
-    @apply text-6xl;
-  }
-  [class^="text-"][class*="-7xl"] {
-    @apply text-7xl;
-  }
-  [class^="text-"][class*="-8xl"] {
-    @apply text-8xl;
-  }
-  [class^="text-"][class*="-9xl"] {
-    @apply text-9xl;
-  }
-
-  /* Colors */
-  [class^="text-"][class*="-foreground"] {
-    @apply text-[var(--foreground)];
-  }
-  [class^="text-"][class*="-background"] {
-    @apply text-[var(--background)];
-  }
-  [class^="text-"][class*="-primary"] {
-    @apply text-[var(--primary)];
-  }
-  [class^="text-"][class*="-secondary"] {
-    @apply text-[var(--secondary)];
-  }
-  [class^="text-"][class*="-success"] {
-    @apply text-[var(--success)];
-  }
-  [class^="text-"][class*="-danger"] {
-    @apply text-[var(--danger)];
-  }
-  [class^="text-"][class*="-warning"] {
-    @apply text-[var(--warning)];
-  }
-  [class^="text-"][class*="-info"] {
-    @apply text-[var(--info)];
-  }
-  [class^="text-"][class*="-light"] {
-    @apply text-[var(--light)];
-  }
-  [class^="text-"][class*="-dark"] {
-    @apply text-[var(--dark)];
-  }
-
-  /* font weight */
-  [class^="text-"][class*="-thin"] {
-    @apply font-thin;
-  }
-  [class^="text-"][class*="-extralight"] {
-    @apply font-extralight;
-  }
-  [class^="text-"][class*="-light"] {
-    @apply font-light;
-  }
-  [class^="text-"][class*="-normal"] {
-    @apply font-normal;
-  }
-  [class^="text-"][class*="-medium"] {
-    @apply font-medium;
-  }
-  [class^="text-"][class*="-semibold"] {
-    @apply font-semibold;
-  }
-  [class^="text-"][class*="-bold"] {
-    @apply font-bold;
-  }
-  [class^="text-"][class*="-extrabold"] {
-    @apply font-extrabold;
-  }
-
-  /* font style */
-  [class^="text-"][class*="-black"] {
-    @apply font-black;
-  }
-  [class^="text-"][class*="-italic"] {
-    @apply italic;
-  }
-
-  /* text decoration */
-  [class^="text-"][class*="-underline"] {
-    @apply underline;
-  }
-  [class^="text-"][class*="-line-through"] {
-    @apply line-through;
-  }
-  [class^="text-"][class*="-no-underline"] {
-    @apply no-underline;
-  }
-
-  /* text transform */
-  [class^="text-"][class*="-uppercase"] {
-    @apply uppercase;
-  }
-  [class^="text-"][class*="-lowercase"] {
-    @apply lowercase;
-  }
-  [class^="text-"][class*="-capitalize"] {
-    @apply capitalize;
-  }
-  [class^="text-"][class*="-normal-case"] {
-    @apply normal-case;
-  }
-}
-
-/* !Warning: working with this system means that you can not handle the text color and background color in the same class */
-
-/* background colors */
-@layer utilities {
-  /* Colors */
-  [class*="bg-"][class*="-foreground"] {
-    @apply bg-[var(--foreground)];
-  }
-  [class*="bg-"][class*="-background"] {
-    @apply bg-[var(--background)];
-  }
-  [class*="bg-"][class*="-primary"] {
-    @apply bg-[var(--primary)];
-  }
-  [class*="bg-"][class*="-secondary"] {
-    @apply bg-[var(--secondary)];
-  }
-  [class*="bg-"][class*="-success"] {
-    @apply bg-[var(--success)];
-  }
-  [class*="bg-"][class*="-danger"] {
-    @apply bg-[var(--danger)];
-  }
-  [class*="bg-"][class*="-warning"] {
-    @apply bg-[var(--warning)];
-  }
-  [class*="bg-"][class*="-info"] {
-    @apply bg-[var(--info)];
-  }
-  [class*="bg-"][class*="-light"] {
-    @apply bg-[var(--light)];
-  }
-  [class*="bg-"][class*="-dark"] {
-    @apply bg-[var(--dark)];
-  }
-}
