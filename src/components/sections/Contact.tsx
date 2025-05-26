@@ -19,6 +19,7 @@ const Contact = () => {
                     </p>
                 </div>
 
+                {/* Contact Form */}
                 <div className='flex-1 p-6 rounded-2xl shadow-lg w-full bg-dark/5 border border-primary/30 hover:bg-dark/10 transition-all duration-300'>
                     <form action="" method="POST" className="flex flex-col gap-4">
                         <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
@@ -32,6 +33,7 @@ const Contact = () => {
                                 className="w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50"
                             />
                         </div>
+
                         <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
                             <label htmlFor="email" className='hidden'>Email</label>
                             <input
@@ -43,6 +45,7 @@ const Contact = () => {
                                 className="w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50"
                             />
                         </div>
+
                         <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
                             <label htmlFor="message" className='hidden'>Message</label>
                             <textarea

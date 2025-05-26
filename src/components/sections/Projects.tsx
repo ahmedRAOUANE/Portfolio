@@ -5,13 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Project } from '@/utils/types/project';
 import { baseUrl } from '@/utils/constansts';
-import { isFeatureEnabled } from '@/utils/featureflags-service';
-import ActionBtn from '../action-btn';
 
 const Projects = () => {
   const [projectList, setProjectList] = useState<Project[]>([]);
   const [isPending, startTransition] = useTransition();
-  const isEnabled = isFeatureEnabled("projects");
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -23,10 +20,6 @@ const Projects = () => {
     };
     fetchProjects();
   }, []);
-
-  if (!isEnabled) {
-    return null;
-  }
 
   return (
     <section id='projects' className="projects-section py-12 px-4 bg-background text-foreground">
@@ -54,16 +47,16 @@ const Projects = () => {
                       <p className="text-sm text-light mb-4">{project.description}</p>
 
                       <div className='flex gap-2'>
-                        <ActionBtn
-                          className='bg-primary/30 hover:bg-primary/40 text-foreground px-4 py-2 rounded-lg transition-all duration-300'
-                          action={{ state1: "View Demo", state2: "Loading..." }}
-                          title="View Demo"
-                        />
-                        <ActionBtn
-                          className='bg-secondary/30 hover:bg-secondary/40 text-foreground px-4 py-2 rounded-lg transition-all duration-300'
-                          action={{ state1: "Source Code", state2: "Loading..." }}
-                          title="Source Code"
-                        />
+                        <Link
+                          href={project.project_link}
+                          target='_blank' className='text-primary hover:underline'
+                          title="View Project in a new tab"
+                        >View Project</Link>
+                        {/* <Link
+                          href={`/details/${project.id}`}
+                          className='text-secondary hover:underline'
+                          title="View Project Details"
+                        >Details</Link> */}
                       </div>
                     </div>
                   </div>

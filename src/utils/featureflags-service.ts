@@ -9,10 +9,6 @@ const experimentalFeatures = [
     {
         name: "contact-form",
         enabled: enabled
-    },
-    {
-        name: "release",
-        enabled: enabled
     }
 ]
 

@@ -90,17 +90,12 @@ const AddProject = () => {
     }
 
     return (
-        <div className="w-full p-6 bg-dark rounded-lg shadow-md" >
-            <h2 className="text-2xl font-bold mb-4" > Add New Project </h2>
+        <div className="w-full">
+            <h2 className="text-2xl font-bold mb-6 text-primary">Add New Project</h2>
 
-            < form className="w-full flex flex-col gap-6" onSubmit={handleAddProject} >
-                <div>
-                    <label
-                        htmlFor="projectName"
-                        className="hidden"
-                    >
-                        Project Name
-                    </label>
+            <form className="w-full flex flex-col gap-6" onSubmit={handleAddProject}>
+                <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
+                    <label htmlFor="projectName" className="hidden">Project Name</label>
                     <input
                         ref={nameRef}
                         placeholder="Project Name"
@@ -108,35 +103,25 @@ const AddProject = () => {
                         id="projectName"
                         name="projectName"
                         required
-                        className="w-full p-2 rounded-lg text-foreground bg-dark"
+                        className="w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50"
                     />
                 </div>
 
-                < div >
-                    <label
-                        htmlFor="description"
-                        className="hidden"
-                    >
-                        Description
-                    </label>
+                <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
+                    <label htmlFor="description" className="hidden">Description</label>
                     <textarea
                         ref={descriptionRef}
-                        placeholder="description"
+                        placeholder="Description"
                         id="description"
                         name="description"
                         rows={4}
                         required
-                        className="w-full p-2 bg-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50 resize-none"
                     ></textarea>
                 </div>
 
-                < div >
-                    <label
-                        htmlFor="link"
-                        className="hidden"
-                    >
-                        Link / URL
-                    </label>
+                <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
+                    <label htmlFor="link" className="hidden">Link / URL</label>
                     <input
                         ref={linkRef}
                         placeholder="Project Link/URL"
@@ -144,11 +129,11 @@ const AddProject = () => {
                         id="link"
                         name="link"
                         required
-                        className="w-full p-2 bg-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50"
                     />
                 </div>
 
-                < div className="mb-6" >
+                <div className="mb-6">
                     <div>
                         {imagePreview && (
                             <div className="mb-4 relative w-full aspect-video">
@@ -164,7 +149,7 @@ const AddProject = () => {
                                         setImagePreview(null);
                                         if (imageRef.current) imageRef.current.value = "";
                                     }}
-                                    className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                                    className="absolute top-2 right-2 bg-red-500/90 hover:bg-red-500 text-white p-2 rounded-full transition-all duration-300"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                         <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -174,14 +159,8 @@ const AddProject = () => {
                         )}
                     </div>
 
-                    <div>
-                        <label
-                            htmlFor="image"
-                            className="hidden"
-                        >
-                            Image
-                        </label>
-
+                    <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
+                        <label htmlFor="image" className="hidden">Image</label>
                         <input
                             onChange={handleImageChange}
                             ref={imageRef}
@@ -191,32 +170,31 @@ const AddProject = () => {
                             name="image"
                             accept="image/*"
                             required
-                            className="w-full p-2 bg-dark rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-dark file:bg-light file:text-dark hover:file:bg-secondary-light cursor-pointer"
+                            className="w-full bg-transparent text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary/30 file:text-foreground hover:file:bg-primary/40 file:transition-all file:duration-300 cursor-pointer"
                         />
                     </div>
                 </div>
 
-                <div className="mb-6 flex items-center justify-start gap-2" >
+                <div className="mb-6 flex items-center justify-start gap-2">
                     <input
                         defaultChecked={true}
                         ref={isActiveRef}
                         type="checkbox"
                         id="isActive"
                         name="isActive"
+                        className="w-4 h-4 rounded border-primary/30 text-primary focus:ring-primary/50"
                     />
-                    <label
-                        htmlFor="isActive"
-                    >
-                        show this project
+                    <label htmlFor="isActive" className="text-light">
+                        Show this project
                     </label>
                 </div>
 
                 <ActionBtn
                     pending={pending}
-                    action={{ state1: "save", state2: "saving..." }}
-                    className="bg-primary"
+                    action={{ state1: "Save Project", state2: "Saving..." }}
+                    className="bg-primary/30 hover:bg-primary/40 text-foreground p-3 rounded-lg transition-all duration-300"
                     type="submit"
-                    title="add project"
+                    title="Add Project"
                 />
             </form>
         </div>

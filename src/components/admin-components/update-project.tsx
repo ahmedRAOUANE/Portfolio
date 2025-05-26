@@ -85,14 +85,14 @@ const UpdateProject = ({ project }: Props) => {
     }
 
     return (
-        <div className="w-96" >
-            <h2 className="text-2xl font-bold mb-4" > Add New Project </h2>
+        <div className="w-full">
+            <h2 className="text-2xl font-bold mb-6 text-primary">Update Project</h2>
 
-            < form className="w-full flex flex-col gap-6" onSubmit={handleUpdateProject} >
-                <div>
+            <form className="w-full flex flex-col gap-6" onSubmit={handleUpdateProject}>
+                <div className="space-y-2">
                     <label
                         htmlFor="projectName"
-                        className="hidden"
+                        className="block text-sm font-medium text-light"
                     >
                         Project Name
                     </label>
@@ -104,35 +104,35 @@ const UpdateProject = ({ project }: Props) => {
                         id="projectName"
                         name="projectName"
                         required
-                        className="w-full p-2 rounded-lg text-foreground bg-dark"
+                        className="w-full p-3 rounded-lg text-foreground bg-primary/10 border border-primary/20 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300"
                     />
                 </div>
 
-                < div >
+                <div className="space-y-2">
                     <label
                         htmlFor="description"
-                        className="hidden"
+                        className="block text-sm font-medium text-light"
                     >
                         Description
                     </label>
                     <textarea
                         defaultValue={project.description}
                         ref={descriptionRef}
-                        placeholder="description"
+                        placeholder="Description"
                         id="description"
                         name="description"
                         rows={4}
                         required
-                        className="w-full p-2 bg-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full p-3 bg-primary/10 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300 resize-none"
                     ></textarea>
                 </div>
 
-                < div >
+                <div className="space-y-2">
                     <label
                         htmlFor="link"
-                        className="hidden"
+                        className="block text-sm font-medium text-light"
                     >
-                        Link / URL
+                        Project Link
                     </label>
                     <input
                         defaultValue={project.project_link}
@@ -142,62 +142,67 @@ const UpdateProject = ({ project }: Props) => {
                         id="link"
                         name="link"
                         required
-                        className="w-full p-2 bg-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full p-3 bg-primary/10 border border-primary/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent transition-all duration-300"
                     />
                 </div>
 
-                < div className="mb-6 flex flex-col gap-4" >
-                    <div className="relative w-full aspect-video">
-                        <div className="animate-pulse w-full h-full"></div>
-
-                        <Image
-                            src={imagePreview ? URL.createObjectURL(imagePreview) : project.image.url}
-                            alt="Project Preview"
-                            fill
-                            className="object-cover rounded-lg"
-                        />
+                <div className="space-y-4">
+                    <label className="block text-sm font-medium text-light">
+                        Project Image
+                    </label>
+                    <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-primary/20">
+                        {imagePreview ? (
+                            <Image
+                                src={URL.createObjectURL(imagePreview)}
+                                alt="Project Preview"
+                                fill
+                                className="object-cover"
+                            />
+                        ) : (
+                            <Image
+                                src={project.image.url}
+                                alt="Project Preview"
+                                fill
+                                className="object-cover"
+                            />
+                        )}
                     </div>
 
-                    <div>
-                        <label
-                            htmlFor="image"
-                            className="hidden"
-                        >
-                            Image
-                        </label>
+                    <div className="relative">
                         <input
-                            placeholder="Project Image"
                             type="file"
                             id="image"
                             name="image"
                             accept="image/*"
                             onChange={handleImageChange}
-                            className="w-full p-2 bg-dark rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-dark file:bg-light file:text-dark hover:file:bg-secondary-light cursor-pointer"
+                            className="w-full p-3 bg-primary/10 border border-primary/20 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-primary/20 file:text-primary hover:file:bg-primary/30 cursor-pointer transition-all duration-300"
                         />
                     </div>
                 </div>
 
-                <div className="mb-6 flex items-center justify-start gap-2" >
+                <div className="flex items-center gap-3">
                     <input
                         defaultChecked={project.is_active}
                         ref={isActiveRef}
                         type="checkbox"
                         id="isActive"
                         name="isActive"
+                        className="w-4 h-4 rounded border-primary/30 text-primary focus:ring-primary/50"
                     />
                     <label
                         htmlFor="isActive"
+                        className="text-sm font-medium text-light"
                     >
-                        show this project
+                        Show this project
                     </label>
                 </div>
 
                 <ActionBtn
                     pending={pending}
-                    action={{ state1: "save", state2: "saving..." }}
-                    className="bg-primary"
+                    action={{ state1: "Update Project", state2: "Updating..." }}
+                    className="bg-primary hover:bg-primary/90 text-white"
                     type="submit"
-                    title="add project"
+                    title="Update project"
                 />
             </form>
         </div>

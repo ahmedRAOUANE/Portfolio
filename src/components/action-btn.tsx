@@ -14,7 +14,7 @@ const ActionBtn = ({ pending, action, className, onclick, type = "button", title
     return (
         <button
             type={type}
-            className={`flex items-center justify-center gap-2 p-2 rounded-lg ${pending ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-primary/90"} bg-primary text-foreground ${className}`}
+            className={`flex items-center justify-center gap-2 p-2 rounded-lg ${pending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${className}`}
             disabled={pending}
             onClick={onclick}
             title={title}

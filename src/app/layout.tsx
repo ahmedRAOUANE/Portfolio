@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`light bg-background text-foreground`}
+        className={`bg-background text-foreground`}
       >
         {children}
       </body>

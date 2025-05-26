@@ -7,6 +7,7 @@ const About = () => {
             <div className="container mx-auto max-w-4xl">
                 <div className="flex items-center gap-4 my-6 p-6 bg-primary/5 rounded-2xl border border-primary/30 hover:bg-primary/10 transition-all duration-300">
                     <div className="bg-primary/30 hover:bg-primary/40 rounded-full flex items-center justify-center transition-all duration-300">
+                        {/* //! The Image display have an issue */}
                         <Image
                             src="/logo.svg"
                             alt="Logo"

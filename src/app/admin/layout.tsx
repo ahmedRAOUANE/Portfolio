@@ -10,12 +10,33 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             <Header />
 
             {/* Sidebar */}
-            <nav className="pt-16 fixed -left-[200px] md:left-0 md:static w-[200px] h-full">
-                <div className="p-4 flex flex-col justify-between gap-4 bg-dark backdrop-blur h-full">
+            <nav className="pt-16 fixed -left-[200px] md:left-0 md:static w-[200px] h-full transition-all duration-300">
+                <div className="p-4 flex flex-col justify-between gap-4 bg-dark/5 backdrop-blur h-full border-r border-primary/30">
                     <ul className="flex flex-col gap-4 text-foreground">
-                        <li><Link href={`${Routes.admin}`} className="hover:underline">Home</Link></li>
-                        <li><Link href={`${Routes.admin}/projects`} className="hover:underline">Projects</Link></li>
-                        <li><Link href={`${Routes.admin}/settings`} className="hover:underline">Settings</Link></li>
+                        <li>
+                            <Link
+                                href={`${Routes.admin}`}
+                                className="p-3 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-300 flex items-center gap-2"
+                            >
+                                Home
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href={`${Routes.admin}/projects`}
+                                className="p-3 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-300 flex items-center gap-2"
+                            >
+                                Projects
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href={`${Routes.admin}/settings`}
+                                className="p-3 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-300 flex items-center gap-2"
+                            >
+                                Settings
+                            </Link>
+                        </li>
                     </ul>
 
                     {/* <Footer /> */}
@@ -23,8 +44,10 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </nav>
 
             {/* Main Content */}
-            <main className="flex-grow p-4 text-foreground overflow-auto h-screen">
-                {children}
+            <main className="flex-grow pt-24 p-8 text-foreground overflow-auto h-screen bg-background">
+                <div className="max-w-4xl mx-auto">
+                    {children}
+                </div>
             </main>
         </div>
     );

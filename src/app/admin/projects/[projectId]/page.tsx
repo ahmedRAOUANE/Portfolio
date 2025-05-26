@@ -8,16 +8,16 @@ const AdminUpdateProjectPage = async ({ params }: { params: Promise<{ projectId:
     const project = (Array.isArray(data) ? data[0] : data) as Project;
 
     return (
-        <div className="flex flex-col items-center justify-center mt-20 p-4">
-            <div className="flex flex-col items-center justify-center mb-8">
-                <h1 className="text-4xl-bold mb-6 text-primary">Admin Projects</h1>
+        <div className="flex flex-col gap-8">
+            <div className="bg-primary/5 text-center p-6 rounded-2xl border border-primary/30">
+                <h1 className="text-3xl font-bold text-primary mb-4">Admin Projects</h1>
 
-                <p className="text-md text-foreground-light mb-8">
-                    Manage your project here.
-                </p> 
+                <p className="text-light">
+                    Manage your projects here. Add new projects or modify existing ones.
+                </p>
             </div>
 
-            <div className="w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {!success && (
                     <div>
                         <h2>No project found</h2>
@@ -25,7 +25,11 @@ const AdminUpdateProjectPage = async ({ params }: { params: Promise<{ projectId:
                     </div>
                 )}
 
-                {success && <UpdateProject project={project} />}
+                {success && (
+                    <div className="bg-dark/5 p-6 rounded-2xl border border-primary/30 transition-all duration-300">
+                        <UpdateProject project={project} />
+                    </div>
+                )}
             </div>
         </div>
     );

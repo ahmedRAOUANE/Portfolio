@@ -18,7 +18,7 @@ const headerLinks = [
         label: 'Contact',
         href: '#contact'
     }
-]
+];
 
 const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
     return (

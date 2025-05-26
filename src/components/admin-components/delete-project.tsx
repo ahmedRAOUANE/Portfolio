@@ -4,31 +4,31 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import ActionBtn from "../action-btn";
 
-const DeleteProject = ({id}: {id: string}) => {
+interface DeleteProjectProps {
+    id: string;
+    onDelete: () => Promise<void>;
+}
+
+const DeleteProject = ({ id, onDelete }: DeleteProjectProps) => {
     const [pending, startTransition] = useTransition();
     const router = useRouter();
 
     const handleDelete = async () => {
         startTransition(async () => {
-            await fetch("/api/projects", {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ id }),
-                credentials: "include"
-            });
+            await onDelete();
             router.refresh();
         })
     }
 
-    return <ActionBtn
-        onclick={handleDelete}
-        pending={pending}
-        action={{ state1: "delete", state2: "deleting..." }}
-        className="text-red-500 bg-red-400/20"
-        title="delete project"
-    />
+    return (
+        <ActionBtn
+            onclick={handleDelete}
+            pending={pending}
+            action={{ state1: "Delete", state2: "Deleting..." }}
+            className="text-danger hover:text-danger/80 bg-danger/10 hover:bg-danger/20 p-2 rounded-lg transition-all duration-300"
+            title="Delete project"
+        />
+    )
 }
 
 export default DeleteProject;

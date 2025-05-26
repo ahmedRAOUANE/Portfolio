@@ -19,6 +19,7 @@ const Footer = () => {
             >
               GitHub
             </Link>
+
             <Link
               href="https://linkedin.com/in/ahmed-raouane"
               target="_blank"
@@ -27,6 +28,7 @@ const Footer = () => {
             >
               LinkedIn
             </Link>
+            
             <Link
               href="https://x.com/RaouaneAhm93432"
               target="_blank"
