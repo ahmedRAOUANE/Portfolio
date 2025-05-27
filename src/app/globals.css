@@ -16,15 +16,17 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: #121212;
-      --color-foreground: #ffffff;
-      --color-primary: #bb86fc;
-      --color-secondary: #03dac6;
-      --color-success: #4caf50;
-      --color-danger: #f44336;
-      --color-warning: #ffeb3b;
-      --color-info: #2196f3;
-      --color-light: #bdbdbd;
-      --color-dark: #464646;
+    --color-foreground: #ffffff;
+    --color-primary: #bb86fc;
+    --color-secondary: #03dac6;
+    --color-success: #4caf50;
+    --color-danger: #f44336;
+    --color-warning: #ffeb3b;
+    --color-info: #2196f3;
+    --color-light: #bdbdbd;
+    --color-dark: #464646;
+
+    scroll-behavior: smooth;
   }
 }
 
@@ -57,4 +59,3 @@ body {
   --color-light: #bdbdbd;
   --color-dark: #464646;
 }
-

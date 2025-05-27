@@ -26,7 +26,7 @@ const headerLinks = [
 
 const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
     return (
-        <nav id={id} className='hidden md:flex'>
+        <nav id={id} className='relative'>
             <ul className={className}>
                 {headerLinks.map((link) => (
                     <li key={link.href}>
@@ -86,15 +86,16 @@ const Header = () => {
                         </button>
                     </div>
                 </div>
-
-                {/* Mobile Navigation Menu */}
-                <NavLinks
-                    className="p-4 flex flex-col gap-4 md:hidden absolute right-0 left-0 top-16 z-20 bg-primary/5 backdrop-blur border border-primary/30 rounded-3xl shadow-lg"
-                    id="mobile-menu"
-                />
             </div>
+
+            {/* Mobile Navigation Menu */}
+            <NavLinks
+                className="p-4 flex md:hidden flex-col gap-4 absolute right-4 left-4 top-5 z-20 bg-primary/5 backdrop-blur  border border-primary/30 rounded-3xl shadow-lg"
+                id="mobile-menu"
+            />
         </header>
     )
 }
 
 export default Header
+
