@@ -59,7 +59,7 @@ export const withErrorHandling = async <T>(fn: () => Promise<T>): Promise<T | Ne
 
         const data = {
             success: false,
-            message: error instanceof Error ? error.message : "Unknown error"
+            message: error instanceof Error ? error.message : error
         }
 
         if (error instanceof NextResponse) {

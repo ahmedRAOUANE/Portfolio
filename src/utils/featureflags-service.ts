@@ -5,10 +5,6 @@ const experimentalFeatures = [
     {
         name: "auth",
         enabled
-    },
-    {
-        name: "contact-form",
-        enabled: enabled
     }
 ]
 

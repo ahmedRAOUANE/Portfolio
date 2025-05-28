@@ -26,8 +26,8 @@ const headerLinks = [
 
 const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
     return (
-        <nav id={id} className='relative'>
-            <ul className={className}>
+        <nav className='relative'>
+            <ul id={id} className={className}>
                 {headerLinks.map((link) => (
                     <li key={link.href}>
                         <Link
@@ -77,7 +77,13 @@ const Header = () => {
                         <button
                             type="button"
                             className="cursor-pointer inline-flex items-center justify-center p-2 rounded-lg text-primary hover:bg-primary/20 transition-all duration-300"
-                            onClick={() => document.getElementById('mobile-menu')?.classList.toggle('hidden')}
+                            onClick={() => {
+                                const menu = document.getElementById('mobile-menu');
+                                if (menu) {
+                                    menu.classList.toggle('hidden');
+                                    menu.classList.toggle('flex');
+                                }
+                            }}
                         >
                             <span className="sr-only">Open main menu</span>
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -90,7 +96,7 @@ const Header = () => {
 
             {/* Mobile Navigation Menu */}
             <NavLinks
-                className="p-4 flex md:hidden flex-col gap-4 absolute right-4 left-4 top-5 z-20 bg-primary/5 backdrop-blur  border border-primary/30 rounded-3xl shadow-lg"
+                className="p-4 hidden md:hidden flex-col gap-4 absolute right-4 left-4 top-5 z-20 bg-primary/5 backdrop-blur  border border-primary/30 rounded-3xl shadow-lg"
                 id="mobile-menu"
             />
         </header>
