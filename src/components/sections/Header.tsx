@@ -18,10 +18,10 @@ const headerLinks = [
         label: 'Skills',
         href: '#skills',
     },
-    // { // will be available in the future
-    //     label: 'Contact',
-    //     href: '#contact'
-    // }
+    {
+        label: 'Contact',
+        href: '#contact'
+    }
 ];
 
 const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
