@@ -18,16 +18,16 @@ const headerLinks = [
         label: 'Skills',
         href: '#skills',
     },
-    // { // will be available in the future
-    //     label: 'Contact',
-    //     href: '#contact'
-    // }
+    {
+        label: 'Contact',
+        href: '#contact'
+    }
 ];
 
 const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
     return (
-        <nav id={id} className='hidden md:flex'>
-            <ul className={className}>
+        <nav className='relative'>
+            <ul id={id} className={className}>
                 {headerLinks.map((link) => (
                     <li key={link.href}>
                         <Link
@@ -77,7 +77,13 @@ const Header = () => {
                         <button
                             type="button"
                             className="cursor-pointer inline-flex items-center justify-center p-2 rounded-lg text-primary hover:bg-primary/20 transition-all duration-300"
-                            onClick={() => document.getElementById('mobile-menu')?.classList.toggle('hidden')}
+                            onClick={() => {
+                                const menu = document.getElementById('mobile-menu');
+                                if (menu) {
+                                    menu.classList.toggle('hidden');
+                                    menu.classList.toggle('flex');
+                                }
+                            }}
                         >
                             <span className="sr-only">Open main menu</span>
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -86,15 +92,16 @@ const Header = () => {
                         </button>
                     </div>
                 </div>
-
-                {/* Mobile Navigation Menu */}
-                <NavLinks
-                    className="p-4 flex flex-col gap-4 md:hidden absolute right-0 left-0 top-16 z-20 bg-primary/5 backdrop-blur border border-primary/30 rounded-3xl shadow-lg"
-                    id="mobile-menu"
-                />
             </div>
+
+            {/* Mobile Navigation Menu */}
+            <NavLinks
+                className="p-4 hidden md:hidden flex-col gap-4 absolute right-4 left-4 top-5 z-20 bg-primary/5 backdrop-blur  border border-primary/30 rounded-3xl shadow-lg"
+                id="mobile-menu"
+            />
         </header>
     )
 }
 
 export default Header
+
