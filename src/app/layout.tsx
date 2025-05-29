@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ThemeProvider from "@/providers/theme-provider";
 
 export const metadata: Metadata = {
   title: "Ahmed RAOUANE",
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body
         className={`bg-background text-foreground`}
       >
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

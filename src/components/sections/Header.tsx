@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'
 import LogoutBtn from '../logout-btn';
+import ToggleTheme from '../toggle-theme';
 
 const headerLinks = [
     {
@@ -38,6 +39,7 @@ const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
                         </Link>
                     </li>
                 ))}
+                <ToggleTheme />
                 <LogoutBtn />
             </ul>
         </nav>
@@ -70,7 +72,7 @@ const Header = () => {
                     </div>
 
                     {/* Desktop Navigation */}
-                    <NavLinks className="hidden md:flex gap-6 text-foreground" />
+                    <NavLinks className="hidden md:flex items-center gap-6 text-foreground" />
 
                     {/* Mobile Navigation Button */}
                     <div className="md:hidden">
