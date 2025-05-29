@@ -13,24 +13,7 @@
   --color-dark: #111827;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #121212;
-    --color-foreground: #ffffff;
-    --color-primary: #bb86fc;
-    --color-secondary: #03dac6;
-    --color-success: #4caf50;
-    --color-danger: #f44336;
-    --color-warning: #ffeb3b;
-    --color-info: #2196f3;
-    --color-light: #bdbdbd;
-    --color-dark: #464646;
-
-    scroll-behavior: smooth;
-  }
-}
-
-body {
+* {
   @apply transition-all duration-300 ease-in-out;
 }
 
@@ -58,4 +41,17 @@ body {
   --color-info: #2196f3;
   --color-light: #bdbdbd;
   --color-dark: #464646;
+}
+
+.solarized {
+  --color-background: #fdf6e3;
+  --color-foreground: #323739;
+  --color-primary: #268bd2;
+  --color-secondary: #2aa198;
+  --color-success: #859900;
+  --color-danger: #dc322f;
+  --color-warning: #b58900;
+  --color-info: #839496;
+  --color-light: #343434;
+  --color-dark: #073642;
 }

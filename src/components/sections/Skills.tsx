@@ -134,7 +134,7 @@ const SkillsList = ({ skills }: { skills: Skill[] }) => skills.map((skill, index
   return (
     <div
       key={index}
-      className={`rounded-lg p-4 shadow-lg border ${styles.border} ${styles.card} transition-all duration-300`}
+      className={`rounded-lg p-2 md:p-4 shadow-lg border ${styles.border} ${styles.card} transition-all duration-300`}
     >
       <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
 
@@ -143,7 +143,7 @@ const SkillsList = ({ skills }: { skills: Skill[] }) => skills.map((skill, index
           {skill.level}
         </span>
 
-        <span className={`text-xs px-2 py-1 rounded-full ${categoryStyles}`}>
+        <span className={`text-xs ${categoryStyles}`}>
           {skill.category}
         </span>
       </div>
