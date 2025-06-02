@@ -14,6 +14,9 @@ const Projects = () => {
     const fetchProjects = async () => {
       startTransition(async () => {
         const res = await fetch(`${baseUrl}/api/projects?is_active=true`);
+        if (!res.ok) {
+          return;
+        }
         const { data }: { data: Project[] } = await res.json();
         setProjectList(data);
       });
@@ -32,7 +35,7 @@ const Projects = () => {
               {isPending ? (
                 <ProjectFallback />
               ) : (
-                  <p className="text-lg text-light">No projects available.</p>
+                  <ProjectNotFound />
               )}
             </>
           ) : (
@@ -88,6 +91,23 @@ const ProjectFallback = () => {
           onClick={(e) => e.preventDefault()}
         >View Project</Link>
       </div>
+    </div>
+  )
+}
+
+const ProjectNotFound = () => {
+  return (
+    <div className="col-span-full flex flex-col items-center justify-center p-8 bg-dark/20 rounded-lg border border-primary/20">
+      <div className="w-16 h-16 mb-4 rounded-full bg-primary/20 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+
+      <h3 className="text-xl font-semibold text-foreground mb-2">No Projects Found</h3>
+      <p className="text-light text-center max-w-md">
+        Oops! It seems there are no projects available at the moment. Please try again later or visit us again soon.
+      </p>
     </div>
   )
 }
