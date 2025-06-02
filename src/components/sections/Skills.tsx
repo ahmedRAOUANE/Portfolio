@@ -115,7 +115,7 @@ const getCategoryStyles = (category: Skill['category']) => {
 
 const Skills = () => {
   return (
-    <section id='skills' className="skills-section py-12 px-4 bg-background text-foreground">
+    <section id='skills' className="skills-section mt-16 py-12 px-4 bg-background text-foreground">
       <div className='container mx-auto max-w-4xl'>
         <h2 className="text-3xl font-bold mb-8 text-primary">My Skills</h2>
 
