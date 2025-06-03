@@ -9,23 +9,31 @@ import { AVAILABLE_THEMES } from '@/utils/types/theme';
 import { AVAILABLE_LANGUAGES, Language, Languages } from '@/utils/types/languages';
 import { Translations } from '@/utils/types/translations';
 import { useRouter } from 'next/navigation';
+import { IoMdHome } from 'react-icons/io';
+import { FaBookOpen } from 'react-icons/fa';
+import { FaDiagramProject } from 'react-icons/fa6';
+import { MdContactSupport } from 'react-icons/md';
 
 const headerLinks = [
     {
         label: 'home' as const,
-        href: '#about'
+        href: '#',
+        icon: <IoMdHome />
     },
     {
         label: 'about' as const,
-        href: '#skills',
+        href: '#about',
+        icon: <FaBookOpen />
     },
     {
-        label: 'services' as const,
-        href: '#projects'
+        label: 'projects' as const,
+        href: '#projects',
+        icon: <FaDiagramProject />
     },
     {
         label: 'contact' as const,
-        href: '#contact'
+        href: '#contact',
+        icon: <MdContactSupport />
     }
 ] as const;
 
@@ -71,7 +79,10 @@ const Header = ({ translations }: { translations: Translations }) => {
                 </div>
 
                 {/* Desktop Navigation */}
-                <NavLinks className="py-2 px-6 max-w-96 flex items-center justify-around gap-4 bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300" translations={sectionTranslations} />
+                <NavLinks
+                    className="py-2 px-6 flex items-center justify-around gap-6 bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300"
+                    translations={sectionTranslations}
+                />
 
                 {/* Options btn */}
                 <div className="lg:max-w-5xl bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300">
@@ -113,9 +124,10 @@ const NavLinks = ({ className, id, translations }: {
                     <li key={link.href}>
                         <Link
                             href={link.href}
-                            className='cursor-pointer text-foreground hover:text-primary transition-colors duration-300 font-medium'
+                            className='cursor-pointer text-foreground hover:text-primary transition-colors duration-300 font-medium flex items-center gap-2'
                         >
-                            {translations.nav[link.label]}
+                            <span className="inline-block text-xl">{link.icon}</span>
+                            <span className='cursor-pointer hidden md:block'>{translations.nav[link.label]}</span>
                         </Link>
                     </li>
                 ))}
