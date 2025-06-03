@@ -2,8 +2,9 @@
 
 import { useRef, useTransition } from "react";
 import ActionBtn from "./action-btn"
+import { Translations } from "@/utils/types/translations";
 
-const SendEmailForm = () => {
+const SendEmailForm = ({ sectionTranslations }: { sectionTranslations: Translations['contact'] }) => {
     const nameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const messageRef = useRef<HTMLTextAreaElement>(null);
@@ -17,7 +18,7 @@ const SendEmailForm = () => {
         const message = messageRef.current?.value;
 
         if (!name || !email || !message) {
-            alert("Please fill in all fields.");
+            alert(sectionTranslations.form.sendRequire);
             return;
         }
 
@@ -33,11 +34,11 @@ const SendEmailForm = () => {
 
                 if (!response.ok) {
                     console.error("Failed to send email:", response.statusText);
-                    alert("Failed to send email. Please try again later.");
+                    alert(sectionTranslations.form.sendError);
                     return;
                 }
 
-                alert("Email sent successfully!");
+                alert(sectionTranslations.form.sendSuccess);
             });
         } catch (error) {
             console.error("Error sending email:", error);
@@ -53,39 +54,39 @@ const SendEmailForm = () => {
         <div className='flex-1 p-6 rounded-2xl shadow-lg w-full bg-dark/5 border border-primary/30 hover:bg-dark/10 transition-all duration-300'>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
-                    <label htmlFor="name" className='hidden'>Name</label>
+                    <label htmlFor="name" className='hidden'>{sectionTranslations.form.name.toUpperCase()}</label>
                     <input
                         type="text"
                         id="name"
                         name="name"
                         required
-                        placeholder='Name'
+                        placeholder={sectionTranslations.form.name}
                         className="w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50"
                         ref={nameRef}
                     />
                 </div>
 
                 <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
-                    <label htmlFor="email" className='hidden'>Email</label>
+                    <label htmlFor="email" className='hidden'>{sectionTranslations.form.email.toUpperCase()}</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
                         required
-                        placeholder='Email'
+                        placeholder={sectionTranslations.form.email}
                         className="w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50"
                         ref={emailRef}
                     />
                 </div>
 
                 <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
-                    <label htmlFor="message" className='hidden'>Message</label>
+                    <label htmlFor="message" className='hidden'>{sectionTranslations.form.message.toUpperCase()}</label>
                     <textarea
                         id="message"
                         name="message"
                         rows={4}
                         required
-                        placeholder='Message'
+                        placeholder={sectionTranslations.form.message}
                         className='w-full bg-transparent text-foreground focus:outline-none placeholder:text-light/50'
                         ref={messageRef}
                     ></textarea>
@@ -95,8 +96,8 @@ const SendEmailForm = () => {
                     pending={pending}
                     type="submit"
                     className='bg-primary/30 hover:bg-primary/40 text-foreground p-2 rounded-lg transition-all duration-300'
-                    action={{ state1: "Send Message", state2: "Sending..." }}
-                    title="Send Message"
+                    action={{ state1: sectionTranslations.form.submit, state2: sectionTranslations.form.submitting }}
+                    title={sectionTranslations.form.submit}
                 />
             </form>
         </div>

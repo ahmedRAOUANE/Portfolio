@@ -8,14 +8,14 @@ const ToggleTheme = () => {
     const [show, setShow] = useState(false);
 
     return (
-        <div className="relative dropdown dropdown-end w-fit flex space-x-2">
+        <div className="dropdown dropdown-end w-fit flex space-x-2">
             <ActionBtn
                 type="button"
                 className="btn hover:bg-primary/20 transition-colors duration-300 rounded-xl px-3 py-0.5"
                 onclick={() => setShow(!show)}
             >Themes</ActionBtn>
 
-            <div id="dropdown" className={`${show ? "" : "hidden"} absolute -right-52 md:right-0 md:top-12 dropdown-content dropdown-content-right dropdown dropdown-end`}>
+            <div id="dropdown" className={`${show ? "" : "hidden"} absolute right-10 top-8 dropdown-content dropdown-content-right dropdown dropdown-end`}>
                 <ul className="menu space-y-2 p-2 shadow bg-base-100 rounded-2xl w-52 bg-primary/40 backdrop-blur border border-primary/30">
                     {AVAILABLE_THEMES.map((theme) => (
                         <li key={theme}>

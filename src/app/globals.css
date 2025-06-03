@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+:root {
+  @apply scroll-smooth;
+}
+
 @theme {
   --color-background: #ffffff;
   --color-foreground: #1a1a1a;

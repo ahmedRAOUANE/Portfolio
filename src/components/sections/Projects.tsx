@@ -5,8 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Project } from '@/utils/types/project';
 import { baseUrl } from '@/utils/constansts';
+import { Translations } from '@/utils/types/translations';
 
-const Projects = () => {
+const Projects = ({ translations }: { translations: Translations }) => {
+  const sectionTranslations = translations.myProjects;
+
   const [projectList, setProjectList] = useState<Project[]>([]);
   const [isPending, startTransition] = useTransition();
 
@@ -14,6 +17,9 @@ const Projects = () => {
     const fetchProjects = async () => {
       startTransition(async () => {
         const res = await fetch(`${baseUrl}/api/projects?is_active=true`);
+        if (!res.ok) {
+          return;
+        }
         const { data }: { data: Project[] } = await res.json();
         setProjectList(data);
       });
@@ -22,17 +28,17 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id='projects' className="projects-section py-12 px-4 bg-background text-foreground">
+    <section id='projects' className="projects-section mt-16 py-12 px-4 bg-background text-foreground">
       <div className="container mx-auto max-w-4xl">
-        <h2 className="text-3xl font-bold mb-8 text-primary">My Projects</h2>
+        <h2 className="text-3xl font-bold mb-8 text-primary">{sectionTranslations.title}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 px-4 md:px-0">
           {projectList.length === 0 ? (
             <>
               {isPending ? (
-                <ProjectFallback />
+                <ProjectFallback translations={sectionTranslations} />
               ) : (
-                  <p className="text-lg text-light">No projects available.</p>
+                <ProjectNotFound translations={sectionTranslations} />
               )}
             </>
           ) : (
@@ -50,8 +56,8 @@ const Projects = () => {
                         <Link
                           href={project.project_link}
                           target='_blank' className='text-primary hover:underline'
-                          title="View Project in a new tab"
-                        >View Project</Link>
+                          title={sectionTranslations.viewProject}
+                        >{sectionTranslations.viewProject}</Link>
                         {/* <Link
                           href={`/details/${project.id}`}
                           className='text-secondary hover:underline'
@@ -70,7 +76,7 @@ const Projects = () => {
   );
 };
 
-const ProjectFallback = () => {
+const ProjectFallback = ({ translations }: { translations: Translations['myProjects'] }) => {
   return (
     <div className="card project-card bg-dark overflow-hidden rounded-lg shadow-xl border border-light">
       {/* <Image src="/placeholder.jpg" alt="Placeholder" width={400} height={300} className="rounded-t-lg w-full" /> */}
@@ -86,8 +92,25 @@ const ProjectFallback = () => {
           rel="noopener noreferrer"
           className="text-primary hover:underline animate-pulse"
           onClick={(e) => e.preventDefault()}
-        >View Project</Link>
+        >{translations.viewProject}</Link>
       </div>
+    </div>
+  )
+}
+
+const ProjectNotFound = ({ translations }: { translations: Translations['myProjects'] }) => {
+  return (
+    <div className="col-span-full flex flex-col items-center justify-center p-8 bg-dark/20 rounded-lg border border-primary/20">
+      <div className="w-16 h-16 mb-4 rounded-full bg-primary/20 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+
+      <h3 className="text-xl font-semibold text-foreground mb-2">{translations.notFound.title}</h3>
+      <p className="text-light text-center max-w-md">
+        {translations.notFound.description}
+      </p>
     </div>
   )
 }

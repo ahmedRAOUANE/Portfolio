@@ -35,11 +35,12 @@ export function checkForError(success: boolean, message: string, returns: "respo
 
         const data = {
             success,
-            message
+            message,
+            // status
         }
 
-        throw returns === "response" ? NextResponse.json({ data }, { status }) : new Error(data.message)
-        // throw returns === "response" ? NextResponse.json({ data }, { status }) : data
+        // throw returns === "response" ? NextResponse.json({ data }, { status }) : new Error(data.message)
+        throw returns === "response" ? NextResponse.json({ data }, { status }) : data
     }
 }
 
@@ -47,28 +48,40 @@ export function checkForError(success: boolean, message: string, returns: "respo
 
 
 /**
- * catches the error throws for better error handling
- * @param fn 
- * @returns 
+ * Generic error handling wrapper that preserves the return type of the wrapped function
+ * @param fn - The async function to wrap with error handling
+ * @returns The result of the function or an appropriate error response
  */
-export const withErrorHandling = async <T>(fn: () => Promise<T>): Promise<T | NextResponse | Error> => {
+export const withErrorHandling = async <T extends CustomResponse | NextResponse | unknown>(
+    fn: () => Promise<T>
+): Promise<T | NextResponse | CustomResponse> => {
     try {
         return await fn();
     } catch (error: unknown) {
         console.error("Error: ", error);
 
-        const data = {
-            success: false,
-            message: error instanceof Error ? error.message : error
+        if (error instanceof NextResponse) {
+            return NextResponse.json(
+                { success: false, error },
+                { status: error.status}
+            );
+            // return error;
         }
 
-        if (error instanceof NextResponse) {
-            return NextResponse.json(data, { status: error.status });
-        } else if (error instanceof Error) {
+        if (error instanceof Error) {
             throw new Error(error.message)
         }
 
-        throw data
+        // Handle custom response objects
+        if (typeof error === 'object' && error !== null && 'success' in error) {
+            return NextResponse.json(error, { status: 500 });
+        }
+
+        // Handle unknown errors
+        return NextResponse.json(
+            { success: false, message: 'An unexpected error occurred' },
+            { status: 500 }
+        );
     }
 }
 
