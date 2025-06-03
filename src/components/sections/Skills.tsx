@@ -1,3 +1,4 @@
+import { Translations } from '@/utils/types/translations';
 import React from 'react';
 
 enum Levels {
@@ -113,11 +114,13 @@ const getCategoryStyles = (category: Skill['category']) => {
   }
 }
 
-const Skills = () => {
+const Skills = ({ translations }: { translations: Translations }) => {
+  const sectionTranslations = translations.skills;
+
   return (
     <section id='skills' className="skills-section mt-16 py-12 px-4 bg-background text-foreground">
       <div className='container mx-auto max-w-4xl'>
-        <h2 className="text-3xl font-bold mb-8 text-primary">My Skills</h2>
+        <h2 className="text-3xl font-bold mb-8 text-primary">{sectionTranslations.title}</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <SkillsList skills={skills} />

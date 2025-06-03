@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import { isUserAuthenticated } from './utils/validations';
 import { Routes } from './utils/types/routes';
 import { Roles } from './utils/types/roles';
+import { AVAILABLE_LANGUAGES, Language } from '@/utils/types/languages';
 
 /* 
 * - All Valid Routes 
@@ -29,16 +30,34 @@ const publicRoutes = [Routes.home];
 
 
 export async function middleware(request: NextRequest) {
+    const path = request.nextUrl.pathname;
+    const currentLang = path.split('/')[1];
+
     try {
-        const path = request.nextUrl.pathname;
+        // Skip language check for static files, API routes, and admin routes
+        if (path.startsWith('/_next') || path.startsWith('/api') || path.startsWith('/admin')) {
+            return NextResponse.next({ request });
+        }
+
+        // Handle language routing first
+        const pathnameHasLanguage = AVAILABLE_LANGUAGES.includes(currentLang as Language);
+
+        if (!pathnameHasLanguage) {
+            const preferredLanguage = request.headers.get('accept-language')?.split(',')[0].split('-')[0] || 'en';
+            const language = AVAILABLE_LANGUAGES.includes(preferredLanguage as Language) ? preferredLanguage : 'en';
+            return NextResponse.redirect(new URL(`/${language}${path === '/' ? '' : path}`, request.url));
+        }
+
+        // Remove language prefix for route validation
+        const pathWithoutLang = path.replace(/^\/[a-z]{2}/, '') || '/';
 
         // check if the route is valid
-        if (!isValidRoute(path)) {
-            return NextResponse.redirect(new URL(Routes.home, request.url))
+        if (!isValidRoute(pathWithoutLang)) {
+            return NextResponse.redirect(new URL(`/${currentLang}${Routes.home}`, request.url))
         }
 
         // skip auth check for public routes
-        if (publicRoutes.includes(path as Routes)) {
+        if (publicRoutes.includes(pathWithoutLang as Routes)) {
             return NextResponse.next({ request })
         }
 
@@ -47,33 +66,36 @@ export async function middleware(request: NextRequest) {
         const role = data?.role;
 
         // check if unauthenticated users trying to access a protected route
-        if (!data) { // !success || !!data
-            if (isProtectedRoute(path, protectedRoutesForNonAuth)) {
-                return NextResponse.redirect(new URL(Routes.login, request.url))
+        if (!data) {
+            if (isProtectedRoute(pathWithoutLang, protectedRoutesForNonAuth)) {
+                return NextResponse.redirect(new URL(`/${currentLang}${Routes.login}`, request.url))
             }
-
             return NextResponse.next({ request });
         }
 
         // check if authenticated users trying to access protected routes
-        if (isProtectedRoute(path, protectedRoutesForAuth)) {
+        if (isProtectedRoute(pathWithoutLang, protectedRoutesForAuth)) {
             const isAdmin = role === Roles.admin;
-            if (path.startsWith(Routes.admin) && !isAdmin) {
-                return NextResponse.redirect(new URL(Routes.home, request.url))
+            if (pathWithoutLang.startsWith(Routes.admin)) {
+                if (!isAdmin) {
+                    return NextResponse.redirect(new URL(`/${currentLang}${Routes.home}`, request.url))
+                }
+                // If admin, redirect to /admin without language prefix
+                return NextResponse.redirect(new URL(Routes.admin, request.url))
             }
-            if (path.startsWith(Routes.login)) {
-                return NextResponse.redirect(new URL(Routes.home, request.url))
+            if (pathWithoutLang.startsWith(Routes.login)) {
+                // If admin user is logging in, redirect to /admin
+                if (isAdmin) {
+                    return NextResponse.redirect(new URL(Routes.admin, request.url))
+                }
+                return NextResponse.redirect(new URL(`/${currentLang}${Routes.home}`, request.url))
             }
         }
 
-        return NextResponse.next({ request })
+        return NextResponse.next({ request });
     } catch (error: unknown) {
         console.log("middleware Error > catch block: ", error);
-        // on error allow access to public routes, redirect to home page when trying to access a protected route
-        if (publicRoutes.includes(request.nextUrl.pathname as Routes)) {
-            return NextResponse.next({ request });
-        }
-        return NextResponse.redirect(new URL(Routes.home, request.url))
+        return NextResponse.redirect(new URL(`/${currentLang}${Routes.home}`, request.url))
     }
 }
 

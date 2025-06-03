@@ -1,7 +1,7 @@
 export enum Languages {
-    Arabic = 'arabic',
-    English = 'english',
+    ar = 'arabic',
+    en = 'english',
 }
 
-export const AVAILABLE_LANGUAGES = Object.values(Languages);
 export type Language = keyof typeof Languages;
+export const AVAILABLE_LANGUAGES = Object.keys(Languages) as Language[];

@@ -1,0 +1,103 @@
+{
+    "header": {
+        "title": "Title",
+        "logo": {
+            "title": "Logo"
+        },
+        "nav": {
+            "home": "Home",
+            "about": "About",
+            "services": "Services",
+            "contact": "Contact"
+        },
+        "dropdown": {
+            "title": "Options",
+            "language": {
+                "title": "Language",
+                "list": {
+                    "arabic": "Arabic",
+                    "english": "English"
+                }
+            },
+            "theme": {
+                "title": "Theme",
+                "list": {
+                    "dark": "dark",
+                    "light": "light",
+                    "solarized": "solarized"
+                }
+            },
+            "logout": "logout"
+        }
+    },
+    "about": {
+        "title": "Ahmed RAOUANE",
+        "subtitle": "Front end Web Developer",
+        "description": "I am a passionate developer who loves creating dynamic and interactive web applications. I have a background in computer science and a keen interest in design, striving to build applications that are not only functional but also aesthetically pleasing. My skills include JavaScript, React, Next.js, Tailwind CSS, and more. I enjoy learning new technologies and continuously improving my skills. In my free time, I love exploring new places, reading tech blogs, and contributing to open-source software projects."
+    },
+    "skills": {
+        "title": "Skills",
+        "description": "Here are some of the skills I possess:",
+        "skillsList": [
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "Next.js",
+            "node.js",
+            "Tailwind CSS",
+            "Git",
+            "Docker"
+        ]
+    },
+    "myProjects": {
+        "title": "My Projects",
+        "viewProject": "View Project",
+        "notFound": {
+            "title": "No Projects Found",
+            "description": "Oops! It seems there are no projects available at the moment. Please try again later or visit us again soon."
+        }
+    },
+    "contact": {
+        "title": "Contact Me",
+        "description": "I am always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
+        "form": {
+            "name": "Name",
+            "email": "Email",
+            "message": "Message",
+            "submit": "send message",
+            "submitting": "sending..",
+            "sendSuccess": "Email sent successfully!",
+            "sendError": "Failed to send email. Please try again later.",
+            "sendRequire": "Please fill in all fields."
+        }
+    },
+    "footer": {
+        "title": "Ahmed RAOUANE",
+        "copyright": "Copyright © 2025. All rights reserved.",
+        "links": {
+            "github": "Follow me on GitHub",
+            "linkedin": "Follow me on LinkedIn",
+            "twitter": "Follow me on Twitter"
+        }
+    },
+    "auth": {
+        "login": {
+            "title":  "login",
+            "description": "Welcome back",
+            "form": {
+                "email": "Email",
+                "password": "Password",
+                "loginButton": "login",
+                "forgotPassword": "Forgot Password",
+                "register": "create new account",
+                "submit": "login",
+                "submitting": "logining in",
+                "loginFailed": "failed to login"
+            },
+            "errors": {
+                "invalidCredentials": "invalid credentials",
+                "accountLocked": "this account is locked"
+            }
+        }
+    }
+}

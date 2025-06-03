@@ -2,7 +2,7 @@ import { logout } from "@/actions/auth"
 import { isFeatureEnabled } from "@/utils/featureflags-service"
 import ActionBtn from "./action-btn";
 
-const LogoutBtn = () => {
+const LogoutBtn = ({ translations }: { translations: string }) => {
     const isAuthEnabled = isFeatureEnabled("auth");
     if (!isAuthEnabled) return;
 
@@ -10,7 +10,7 @@ const LogoutBtn = () => {
         <ActionBtn
             onclick={logout}
             className="w-full items-start bg-danger/10 hover:bg-danger/20 text-foreground rounded-lg"
-        >Logout</ActionBtn>
+        >{translations}</ActionBtn>
     )
 }
 

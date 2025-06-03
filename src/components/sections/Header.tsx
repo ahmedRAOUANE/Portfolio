@@ -6,26 +6,28 @@ import React from 'react'
 import LogoutBtn from '../logout-btn';
 import ActionBtn from '../action-btn';
 import { AVAILABLE_THEMES } from '@/utils/types/theme';
-import { AVAILABLE_LANGUAGES } from '@/utils/types/languages';
+import { AVAILABLE_LANGUAGES, Language, Languages } from '@/utils/types/languages';
+import { Translations } from '@/utils/types/translations';
+import { useRouter } from 'next/navigation';
 
 const headerLinks = [
     {
-        label: 'About',
+        label: 'home' as const,
         href: '#about'
     },
     {
-        label: 'Skills',
+        label: 'about' as const,
         href: '#skills',
     },
     {
-        label: 'Projects',
+        label: 'services' as const,
         href: '#projects'
     },
     {
-        label: 'Contact',
+        label: 'contact' as const,
         href: '#contact'
     }
-];
+] as const;
 
 const toggle = (targetId: string) => {
     const targetElement = document.getElementById(targetId);
@@ -42,10 +44,12 @@ const hide = (targetId: string) => {
     }
 }
 
-const Header = () => {
+const Header = ({ translations }: { translations: Translations }) => {
+    const sectionTranslations = translations.header;
+
     return (
         <header className="p-4 sticky top-0 left-0 right-0 z-50">
-            <div className="container relative mx-auto max-w-4xl flex justify-between items-center pe-1 md:pe-4">
+            <div className="container relative mx-auto max-w-4xl flex justify-between items-center">
                 {/* Logo */}
                 <div className="flex-shrink-0 lg:max-w-5xl bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300">
                     <Link
@@ -54,7 +58,7 @@ const Header = () => {
                     >
                         <Image
                             src="/logo.svg"
-                            alt="Logo"
+                            alt={sectionTranslations?.logo?.title}
                             width={40}
                             height={40}
                             className='w-10 h-10 rounded-full'
@@ -67,7 +71,7 @@ const Header = () => {
                 </div>
 
                 {/* Desktop Navigation */}
-                <NavLinks className="py-2 px-6 max-w-96 flex items-center justify-around gap-4 bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300" />
+                <NavLinks className="py-2 px-6 max-w-96 flex items-center justify-around gap-4 bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300" translations={sectionTranslations} />
 
                 {/* Options btn */}
                 <div className="lg:max-w-5xl bg-primary/5 backdrop-blur border-b border-primary/30 rounded-full shadow-lg hover:bg-primary/10 transition-all duration-300">
@@ -80,24 +84,28 @@ const Header = () => {
                             hide('languages-dropdown')
                         }}
                     >
-                        <span className="sr-only">Open main menu</span>
+                        <span className="sr-only">{sectionTranslations?.dropdown?.title}</span>
                         <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </ActionBtn>
                 </div>
 
-                <OtherOptions />
+                <OtherOptions translations={sectionTranslations} />
 
-                <ThemeDropdown />
+                <ThemeDropdown translations={sectionTranslations} />
 
-                <LanguagesDropdown />
+                <LanguagesDropdown translations={sectionTranslations} />
             </div>
         </header>
     )
 }
 
-const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
+const NavLinks = ({ className, id, translations }: {
+    className?: string,
+    id?: string,
+    translations: Translations['header']
+}) => {
     return (
         <nav>
             <ul id={id} className={className}>
@@ -105,9 +113,9 @@ const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
                     <li key={link.href}>
                         <Link
                             href={link.href}
-                            className='cursor-pointer hover:text-primary transition-colors duration-300 font-medium'
+                            className='cursor-pointer text-foreground hover:text-primary transition-colors duration-300 font-medium'
                         >
-                            {link.label}
+                            {translations.nav[link.label]}
                         </Link>
                     </li>
                 ))}
@@ -116,9 +124,9 @@ const NavLinks = ({ className, id }: { className?: string, id?: string }) => {
     )
 }
 
-const OtherOptions = () => {
+const OtherOptions = ({ translations }: { translations: Translations['header'] }) => {
     return (
-        <div id='other-options' className="hidden flex-col items-start space-y-3 absolute right-6 top-12 p-4 px-3 bg-primary/5 backdrop-blur border border-primary/30 rounded-xl shadow-lg hover:bg-primary/10 transition-all duration-300">
+        <div id='other-options' className="hidden flex-col items-start space-y-3 absolute end-6 top-12 p-4 px-3 bg-primary/5 backdrop-blur border border-primary/30 rounded-xl shadow-lg hover:bg-primary/10 transition-all duration-300">
             <ActionBtn
                 type="button"
                 className="w-full justify-start px-4 bg-primary/10 hover:bg-primary/20 text-foreground rounded-lg"
@@ -126,7 +134,7 @@ const OtherOptions = () => {
                     toggle('theme-dropdown')
                     hide('languages-dropdown')
                 }}
-            >Themes</ActionBtn>
+            >{translations.dropdown.theme.title}</ActionBtn>
 
             <ActionBtn
                 type="button"
@@ -135,30 +143,30 @@ const OtherOptions = () => {
                     toggle('languages-dropdown')
                     hide('theme-dropdown')
                 }}
-            >Languages</ActionBtn>
+            >{translations.dropdown.language.title}</ActionBtn>
 
-            <LogoutBtn />
+            <LogoutBtn translations={translations.dropdown.logout} />
         </div>
     )
 }
 
-const ThemeDropdown = () => {
+const ThemeDropdown = ({ translations }: { translations: Translations['header'] }) => {
     return (
-        <div id="theme-dropdown" className={`hidden absolute right-10 top-25 dropdown-content dropdown-content-right dropdown dropdown-end`}>
+        <div id="theme-dropdown" className={`hidden absolute end-10 top-28 dropdown-content dropdown-content-right dropdown dropdown-end`}>
             <ul className="menu space-y-2 p-2 shadow bg-base-100 rounded-2xl w-52 bg-primary/5 backdrop-blur border border-primary/30">
                 {AVAILABLE_THEMES.map((theme) => (
                     <li key={theme}>
                         <ActionBtn
                             type="button"
                             className="w-full items-start bg-primary/10 hover:bg-primary/20 text-foreground rounded-lg"
-                            title={`Switch to ${theme} theme`}
+                            title={translations.dropdown.theme.list[theme]}
                             onclick={() => {
                                 localStorage.setItem("theme", theme);
                                 AVAILABLE_THEMES.forEach(t => document.documentElement.classList.remove(t));
                                 document.documentElement.classList.add(theme);
                             }}
                         >
-                            {theme.charAt(0).toUpperCase() + theme.slice(1)}
+                            {translations.dropdown.theme.list[theme]}
                         </ActionBtn>
                     </li>
                 ))}
@@ -167,28 +175,28 @@ const ThemeDropdown = () => {
     )
 }
 
-const LanguagesDropdown = () => {
+const LanguagesDropdown = ({ translations }: { translations: Translations['header'] }) => {
+    const router = useRouter();
+
     return (
-        <div id="languages-dropdown" className={`hidden absolute right-10 top-36 dropdown-content dropdown-content-right dropdown dropdown-end`}>
+        <div id="languages-dropdown" className={`hidden absolute end-10 top-40 dropdown-content dropdown-content-right dropdown dropdown-end`}>
             <ul className="menu space-y-2 p-2 shadow bg-base-100 rounded-2xl w-52 bg-primary/5 backdrop-blur border border-primary/30">
                 {AVAILABLE_LANGUAGES.map((language) => (
                     <li key={language}>
                         <ActionBtn
                             type="button"
                             className="w-full items-start bg-primary/10 hover:bg-primary/20 text-foreground rounded-lg"
-                            title={`Switch to ${language} language`}
-                            onclick={() => {
-                                console.log(`Switching to ${language} language`)
-                            }}
+                            title={translations.dropdown.language.list[Languages[language]]}
+                            onclick={() => router.push(language as Language)}
                         >
-                            {language.charAt(0).toUpperCase() + language.slice(1)}
+                            {translations.dropdown.language.list[Languages[language]]}
                         </ActionBtn>
                     </li>
                 ))}
             </ul>
         </div>
-    )
-}
+    );
+};
 
 export default Header
 
