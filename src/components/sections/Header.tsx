@@ -9,31 +9,28 @@ import { AVAILABLE_THEMES } from '@/utils/types/theme';
 import { AVAILABLE_LANGUAGES, Language, Languages } from '@/utils/types/languages';
 import { Translations } from '@/utils/types/translations';
 import { useRouter } from 'next/navigation';
-import { IoMdHome } from 'react-icons/io';
-import { FaBookOpen } from 'react-icons/fa';
-import { FaDiagramProject } from 'react-icons/fa6';
-import { MdContactSupport } from 'react-icons/md';
+import { FiFolder, FiMail, FiUser, FiZap } from 'react-icons/fi';
 
 const headerLinks = [
     {
-        label: 'home' as const,
-        href: '#',
-        icon: <IoMdHome />
-    },
-    {
         label: 'about' as const,
         href: '#about',
-        icon: <FaBookOpen />
+        icon: <FiUser />
+    },
+    {
+        label: 'skills' as const,
+        href: '#skills',
+        icon: <FiZap />
     },
     {
         label: 'projects' as const,
         href: '#projects',
-        icon: <FaDiagramProject />
+        icon: <FiFolder />
     },
     {
         label: 'contact' as const,
         href: '#contact',
-        icon: <MdContactSupport />
+        icon: <FiMail />
     }
 ] as const;
 
