@@ -1,7 +1,7 @@
 import About from '@/components/sections/About';
 import Projects from '@/components/sections/Projects';
 import Contact from '@/components/sections/Contact';
-import Header from '@/components/sections/Header';
+import Header from '@/components/sections/header';
 import Footer from '@/components/sections/footer';
 import Skills from '@/components/sections/Skills';
 import { loadTranslation } from '@/utils/data/load-translations';
