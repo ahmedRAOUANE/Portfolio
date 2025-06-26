@@ -1,6 +1,7 @@
 import { Translations } from '@/utils/types/translations';
 import Image from 'next/image';
 import React from 'react';
+import SocialLinks from '../social-links';
 
 const About = ({ translations }: { translations: Translations }) => {
     const sectionTranslations = translations.about;
@@ -24,6 +25,10 @@ const About = ({ translations }: { translations: Translations }) => {
                     <div>
                         <h3 className="text-xl font-semibold text-foreground">{sectionTranslations.title}</h3>
                         <p className="text-primary font-medium">{sectionTranslations.subtitle}</p>
+                    </div>
+
+                    <div className='flex-1'>
+                        <SocialLinks className='flex gap-2 flex-col items-end' translations={translations.footer} />
                     </div>
                 </div>
 

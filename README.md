@@ -18,6 +18,9 @@ A modern, full-stack portfolio web application built with [Next.js](https://next
 - **Environment Variables**: Securely manage API keys and secrets.
 - **ESLint & Prettier**: Code linting and formatting.
 - **Ready for Vercel Deployment**: One-click deploy.
+- **Fully functional send email section**: easily set and receive emails
+- **Protected Routes**: Routes are well orgenized and protected
+- **Admin authentication**
 
 ---
 
@@ -106,7 +109,7 @@ A modern, full-stack portfolio web application built with [Next.js](https://next
 ## Customization
 
 - Update your portfolio content in `src/app/[lang]/page.tsx` and related components.
-- Modify Supabase tables to fit your data needs (projects, profiles).
+- Modify Supabase tables to fit your data needs (projects, profiles, feedback).
 - Adjust styles in `globals.css` or add new components as needed.
 
 ---

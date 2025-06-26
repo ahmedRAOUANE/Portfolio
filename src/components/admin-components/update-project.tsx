@@ -169,6 +169,7 @@ const UpdateProject = ({ project }: Props) => {
                     </div>
 
                     <div className="relative">
+                        <label htmlFor="image" className="hidden">Image</label>
                         <input
                             type="file"
                             id="image"

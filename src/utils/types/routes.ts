@@ -5,5 +5,6 @@
 export enum Routes {
     home = "/",
     login = "/login",
-    admin = "/admin"
+    admin = "/admin",
+    feedback = "/feedback"
 }

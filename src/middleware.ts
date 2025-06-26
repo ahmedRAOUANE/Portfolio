@@ -26,7 +26,7 @@ const protectedRoutesForAuth = [Routes.admin, Routes.login];
 * public routes - these routes are accessable for all users
 * they change based on the features added
 */
-const publicRoutes = [Routes.home];
+const publicRoutes = [Routes.home, Routes.feedback];
 
 
 export async function middleware(request: NextRequest) {

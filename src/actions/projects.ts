@@ -1,23 +1,27 @@
 "use server";
 
-import { checkForError as check, checkUserAuthentication, isUserAuthenticated, withErrorHandling } from "@/utils/validations";
+import { checkForError as check, checkUserAuthentication, withErrorHandling } from "@/utils/validations";
 import { uploadFile } from "@/utils/data/files-cruds";
-import { createClient } from "@/utils/supabase/server";
+// import { createClient } from "@/utils/supabase/server";
 import { Project } from "@/utils/types/project";
 import { CustomResponse } from "@/utils/types/response";
 import { AllowedRoles, Roles } from "@/utils/types/roles";
-import { selectFrom } from "@/utils/data/data-cruds";
+import { insertIn, selectFrom } from "@/utils/data/data-cruds";
 import { FilterOptions } from "@/utils/types/filter";
+import { UploadFileResponse } from "@/utils/types/file";
+import { revalidatePath } from "next/cache";
+import { baseUrl } from "@/utils/constansts";
+import { Routes } from "@/utils/types/routes";
 
 //! this function is deprecated, use fetch request instead
 export const getProjects = async (forRole: AllowedRoles, filter?: FilterOptions): Promise<CustomResponse<Project[]>> => {
     const { success, message, data } = await selectFrom("projects", "*", forRole, filter) //! this line does not work due to header/coockies issue
-// let query = supabase.from("projects").select("*")
+    // let query = supabase.from("projects").select("*")
 
-// if (filter) {
-//     query = query.eq(filter.column, filter.value)
-// }
-// const { data, error } = await query;
+    // if (filter) {
+    //     query = query.eq(filter.column, filter.value)
+    // }
+    // const { data, error } = await query;
 
     check(success, message || "Error fetching projects", "object")
 
@@ -45,41 +49,33 @@ export const getSingleProject = async (projectId: string): Promise<CustomRespons
     }) as CustomResponse<Project>
 }
 
-export const addProject = async (payload: FormData): Promise<CustomResponse> => {
+export const addProject = async (formData: FormData): Promise<CustomResponse> => {
     return await withErrorHandling(async () => {
-        const supabase = await createClient();
+        const imageFile = formData.get("image") as File;
 
-        // check if the user is authenticated
-        const { success, data } = await isUserAuthenticated();
-        const role = data?.role as AllowedRoles;
+        const { success: imageSuccess, data: imageData, message } = await uploadFile(imageFile, "projects", "images");
+        check(imageSuccess, `insertion Error > POST > uploadFile: ${message || "failed too upload file"}`, "response", 500)
 
-        check(success, "User not authenticated", "object");
-
-        check(role === Roles.admin, "Admin not authorized - Only admins can access this route", "object")
-
-        // upload file
-        const { success: uploadSuccess, data: uploadData } = await uploadFile(payload.get("image") as File, "projects", "images");
-        check(uploadSuccess, "Error uploading file", "object")
-
-        const imgUrl = uploadData?.url;
-
-        const project = {
-            name: payload.get("projectName") as string,
-            description: payload.get("description") as string,
-            link: payload.get("link") as string,
-            image: imgUrl,
+        const { url, fileName } = imageData as UploadFileResponse;
+        const payload: Project = {
+            name: formData.get("projectName") as string,
+            description: formData.get("description") as string,
+            project_link: formData.get("link") as string,
+            is_active: !!formData.get("isActive"),
+            image: {
+                url,
+                fileName
+            }
         }
 
-        // add project to the database
-        const { data: projectData, error } = await supabase
-            .from("projects")
-            .insert([project]);
+        const { success: insertSuccess, data, message: insertErrorMessage } = await insertIn("projects", payload, "*", Roles.admin)
+        check(insertSuccess, `insertion Error > POST > insertIn: ${insertErrorMessage || "failed to insert in table: projects"}`, "response", 500)
 
-        check(!error, "Error adding project", "object");
+        revalidatePath(`${baseUrl}/${Routes.admin}/projects`);
 
         return {
             success: true,
-            data: projectData,
-        };
+            data
+        }
     }) as CustomResponse
 }
