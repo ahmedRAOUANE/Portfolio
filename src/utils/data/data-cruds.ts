@@ -6,7 +6,7 @@ import { Project } from "../types/project";
 import { deleteFile } from "./files-cruds";
 import { FilterOptions } from "../types/filter";
 
-export const selectFrom = async (table: string, select: string, forRole: AllowedRoles, filter?: FilterOptions): Promise<CustomResponse> => {
+export const selectFrom = async <T>(table: string, select: string, forRole: AllowedRoles, filter?: FilterOptions, limit?: number): Promise<CustomResponse<T>> => {
     return await withErrorHandling(async () => {
         check(!!table && !!select && !!forRole, "Selection Error > validation: Some required parameters are invalid", "object")
         
@@ -24,6 +24,10 @@ export const selectFrom = async (table: string, select: string, forRole: Allowed
             query = query.eq(filter.column, filter.value)
         }
 
+        if (limit) {
+            query = query.limit(limit)
+        }
+
         const { data, error } = await query;
 
         check(!error, `selection Error > selectFrom ${table}: ${error?.message || "Error select from table"}`, "object");
@@ -32,10 +36,10 @@ export const selectFrom = async (table: string, select: string, forRole: Allowed
             success: true,
             data
         }
-    }) as CustomResponse
+    }) as CustomResponse<T>;
 }
 
-export const insertIn = async (table: string, payload: unknown, select: string, forRole: AllowedRoles): Promise<CustomResponse> => {
+export const insertIn = async <T>(table: string, payload: unknown, select: string, forRole: AllowedRoles): Promise<CustomResponse<T>> => {
     check(!!table && !!payload && !!select && !!forRole, `insertion Error > insertIn > validation: some required parameters are missing`, "object")
     
     await checkUserAuthentication(forRole);
@@ -51,7 +55,7 @@ export const insertIn = async (table: string, payload: unknown, select: string, 
 
     return {
         success: true,
-        data: insertData
+        data: insertData as T
     }
 }
 

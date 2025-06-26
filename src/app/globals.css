@@ -4,6 +4,15 @@
   @apply scroll-smooth;
 }
 
+@keyframes popover {
+ from {
+  transform: scale(75);
+ }
+ to {
+  transform: scale(100);
+ }
+}
+
 @theme {
   --color-background: #ffffff;
   --color-foreground: #1a1a1a;
@@ -59,3 +68,42 @@
   --color-light: #343434;
   --color-dark: #073642;
 }
+
+/* .light {
+  --color-background: #f0f9ff;
+  --color-foreground: #1e293b;
+  --color-primary: #3b82f6;
+  --color-secondary: #ec4899;
+  --color-success: #22c55e;
+  --color-danger: #f87171;
+  --color-warning: #facc15;
+  --color-info: #06b6d4;
+  --color-light: #504b41;
+  --color-dark: #0f172a;
+}
+
+.dark {
+  --color-background: #0f172a;
+  --color-foreground: #e4e7eb;
+  --color-primary: #a78bfa;
+  --color-secondary: #2dd4bf;
+  --color-success: #4ade80;
+  --color-danger: #ef4444;
+  --color-warning: #eab308;
+  --color-info: #3b82f6;
+  --color-light: #9ca3af;
+  --color-dark: #374151;
+}
+
+.solarized {
+  --color-background: #fff7e6;
+  --color-foreground: #2d3748;
+  --color-primary: #60a5fa;
+  --color-secondary: #34d399;
+  --color-success: #a3e635;
+  --color-danger: #f87171;
+  --color-warning: #fb923c;
+  --color-info: #94a3b8;
+  --color-light: #4b5563;
+  --color-dark: #1e3a8a;
+} */

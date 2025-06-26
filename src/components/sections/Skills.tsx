@@ -69,31 +69,31 @@ const getLevelStyles = (level: Skill['level']) => {
     case Levels.Beginner:
       return {
         border: 'border-info/30 hover:border-info',
-        badge: 'bg-info/30 text-info font-medium',
+        badge: 'bg-info/10 text-info font-medium',
         card: 'bg-info/5 hover:bg-info/10'
       };
     case Levels.Intermediate:
       return {
         border: 'border-success/30 hover:border-success',
-        badge: 'bg-success/30 text-success font-medium',
+        badge: 'bg-success/10 text-success font-medium',
         card: 'bg-success/5 hover:bg-success/10'
       };
     case Levels.Advanced:
       return {
         border: 'border-primary/30 hover:border-primary',
-        badge: 'bg-primary/30 text-primary font-medium',
+        badge: 'bg-primary/10 text-primary font-medium',
         card: 'bg-primary/5 hover:bg-primary/10'
       };
     case Levels.Expert:
       return {
         border: 'border-secondary/30 hover:border-secondary',
-        badge: 'bg-secondary/30 text-secondary font-medium',
+        badge: 'bg-secondary/10 text-secondary font-medium',
         card: 'bg-secondary/5 hover:bg-secondary/10'
       };
     default:
       return {
         border: 'border-light/30 hover:border-light',
-        badge: 'bg-light/30 text-light font-medium',
+        badge: 'bg-light/10 text-light font-medium',
         card: 'bg-light/5 hover:bg-light/10'
       };
   }
@@ -142,11 +142,11 @@ const SkillsList = ({ skills }: { skills: Skill[] }) => skills.map((skill, index
       <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
 
       <div className="flex items-center justify-start gap-2">
-        <span className={`text-xs px-2 py-1 rounded-full ${styles.badge}`}>
+        <span className={`level text-xs px-2 py-1 rounded-full ${styles.badge}`}>
           {skill.level}
         </span>
 
-        <span className={`text-xs ${categoryStyles}`}>
+        <span className={`category text-xs ${categoryStyles}`}>
           {skill.category}
         </span>
       </div>

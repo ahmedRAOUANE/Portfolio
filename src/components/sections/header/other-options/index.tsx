@@ -8,7 +8,7 @@ import ResumeLink from "./resume-link";
 
 const OtherOptions = ({ translations }: { translations: Translations['header'] }) => {
     return (
-        <div id='other-options' className="hidden flex-col items-start space-y-3 absolute end-6 top-12 p-4 px-3 bg-primary/5 backdrop-blur border border-primary/30 rounded-xl shadow-lg hover:bg-primary/10 transition-all duration-300">
+        <div id='other-options' className="hidden flex-col items-start space-y-3 absolute end-6 top-12 p-4 px-3 bg-primary/5 backdrop-blur border border-primary/30 rounded-xl shadow-lg hover:bg-primary/10 transition-all duration-300 animate-popover">
             <ActionBtn
                 type="button"
                 className="w-full justify-start px-4 bg-primary/10 hover:bg-primary/20 text-foreground rounded-lg"

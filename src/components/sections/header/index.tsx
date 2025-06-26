@@ -2,11 +2,39 @@ import Image from 'next/image';
 import Link from 'next/link'
 import React from 'react'
 import { Translations } from '@/utils/types/translations';
-import NavLinks from './nav-links';
 import OtherOptions from './other-options';
 import ThemeDropdown from './theme-dropdown';
 import LanguagesDropdown from './language-dropdown';
 import OptionsBtn from './options-btn';
+import { FiFolder, FiMail, FiMessageCircle, FiUser, FiZap } from 'react-icons/fi';
+
+const headerLinks = [
+    {
+        label: 'about' as const,
+        href: '#about',
+        icon: <FiUser />
+    },
+    {
+        label: 'skills' as const,
+        href: '#skills',
+        icon: <FiZap />
+    },
+    {
+        label: 'projects' as const,
+        href: '#projects',
+        icon: <FiFolder />
+    },
+    {
+        label: 'contact' as const,
+        href: '#contact',
+        icon: <FiMail />
+    },
+    {
+        label: 'feedback' as const,
+        href: '#feedback',
+        icon: <FiMessageCircle />
+    }
+] as const;
 
 const Header = ({ translations }: { translations: Translations }) => {
     const sectionTranslations = translations.header;
@@ -50,6 +78,31 @@ const Header = ({ translations }: { translations: Translations }) => {
                 <LanguagesDropdown translations={sectionTranslations} />
             </div>
         </header>
+    )
+}
+
+const NavLinks = ({ className, id, translations }: {
+    className?: string,
+    id?: string,
+    translations: Translations['header']
+}) => {
+    return (
+        <nav>
+            <ul id={id} className={className}>
+                {headerLinks.map((link) => (
+                    <li key={link.href}>
+                        <Link
+                            aria-label={translations.nav[link.label]}
+                            href={link.href}
+                            className='cursor-pointer text-foreground hover:text-primary transition-colors duration-300 font-medium flex items-center gap-2'
+                        >
+                            <span className="inline-block text-xl">{link.icon}</span>
+                            <span className='cursor-pointer hidden md:block'>{translations.nav[link.label]}</span>
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </nav>
     )
 }
 

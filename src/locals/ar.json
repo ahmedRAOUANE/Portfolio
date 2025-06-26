@@ -8,7 +8,8 @@
             "about": "حول",
             "skills": "المهارات",
             "projects": "المشاريع",
-            "contact": "اتصل بنا"
+            "contact": "اتصل بنا",
+            "feedback": "الملاحظات"
         },
         "dropdown": {
             "title": "الخيارات",
@@ -80,6 +81,23 @@
             "linkedin": "تابعني على LinkedIn",
             "twitter": "تابعني على Twitter"
         }
+    },
+    "feedback": {
+        "title": "ملاحظات",
+        "description": "ملاحظاتك مهمة بالنسبة لنا. يرجى إخبارنا بأفكارك أو اقتراحاتك.",
+        "form": {
+            "name": "الاسم",
+            "email": "البريد الإلكتروني",
+            "message": "رسالة",
+            "submit": "إرسال الملاحظات",
+            "submitting": "جار الإرسال..",
+            "sendSuccess": "تم إرسال الملاحظات بنجاح!",
+            "sendError": "فشل إرسال الملاحظات. يرجى المحاولة مرة أخرى لاحقًا.",
+            "sendRequire": "يرجى ملء جميع الحقول."
+        },
+        "thankYou": "شكرًا لك على ملاحظاتك!",
+        "noFeedbackAvailable": "لا توجد ملاحظات متاحة",
+        "leaveFeedback": "اترك ملاحظاتك"
     },
     "auth": {
         "login": {

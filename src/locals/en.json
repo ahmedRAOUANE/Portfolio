@@ -8,7 +8,8 @@
             "about": "About",
             "skills": "Skills",
             "projects": "Projects",
-            "contact": "Contact"
+            "contact": "Contact",
+            "feedback": "Feedback"
         },
         "dropdown": {
             "title": "Options",
@@ -80,6 +81,23 @@
             "linkedin": "Follow me on LinkedIn",
             "twitter": "Follow me on Twitter"
         }
+    },
+    "feedback": {
+        "title": "Feedback",
+        "description": "Your feedback is important to us. Please let us know your thoughts or suggestions.",
+        "form": {
+            "name": "Name",
+            "email": "Email",
+            "message": "Message",
+            "submit": "send feedback",
+            "submitting": "sending..",
+            "sendSuccess": "Feedback sent successfully!",
+            "sendError": "Failed to send feedback. Please try again later.",
+            "sendRequire": "Please fill in all fields."
+        },
+        "thankYou": "Thank you for your feedback!",
+        "noFeedbackAvailable": "No feedback available",
+        "leaveFeedback": "Leave your feedback"
     },
     "auth": {
         "login": {
