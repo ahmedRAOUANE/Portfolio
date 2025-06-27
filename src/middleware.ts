@@ -34,8 +34,8 @@ export async function middleware(request: NextRequest) {
     const currentLang = path.split('/')[1];
 
     try {
-        // Skip language check for static files, API routes, and admin routes
-        if (path.startsWith('/_next') || path.startsWith('/api') || path.startsWith('/admin')) {
+        // Skip language check for static files and API routes
+        if (path.startsWith('/_next') || path.startsWith('/api')) {
             return NextResponse.next({ request });
         }
 

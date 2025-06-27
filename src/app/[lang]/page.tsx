@@ -8,7 +8,7 @@ import { loadTranslation } from '@/utils/data/load-translations';
 import { Language } from '@/utils/types/languages';
 import Feedback from '@/components/sections/feedback';
 
-export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+export default async function Home({ params }: { params: Promise<{ lang: Language }> }) {
   const { lang } = await params;
   const translations = await loadTranslation(lang as Language);
 
@@ -21,7 +21,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <Skills translations={translations} />
         <Projects translations={translations} />
         <Contact translations={translations} />
-        <Feedback translations={translations} />
+        <Feedback translations={translations} lang={lang} />
       </main>
       
       <Footer translations={translations} />

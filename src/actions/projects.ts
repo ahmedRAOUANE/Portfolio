@@ -50,32 +50,32 @@ export const getSingleProject = async (projectId: string): Promise<CustomRespons
 }
 
 export const addProject = async (formData: FormData): Promise<CustomResponse> => {
-    return await withErrorHandling(async () => {
-        const imageFile = formData.get("image") as File;
+    const imageFile = formData.get("image") as File;
 
-        const { success: imageSuccess, data: imageData, message } = await uploadFile(imageFile, "projects", "images");
-        check(imageSuccess, `insertion Error > POST > uploadFile: ${message || "failed too upload file"}`, "response", 500)
+    const { success: imageSuccess, data: imageData, message } = await uploadFile(imageFile, "projects", "images");
+    check(imageSuccess, `insertion Error > POST > uploadFile: ${message || "failed too upload file"}`, "response", 500)
 
-        const { url, fileName } = imageData as UploadFileResponse;
-        const payload: Project = {
-            name: formData.get("projectName") as string,
-            description: formData.get("description") as string,
-            project_link: formData.get("link") as string,
-            is_active: !!formData.get("isActive"),
-            image: {
-                url,
-                fileName
-            }
+    const { url, fileName } = imageData as UploadFileResponse;
+    const payload: Project = {
+        name: formData.get("projectName") as string,
+        description: formData.get("description") as string,
+        project_link: formData.get("link") as string,
+        is_active: !!formData.get("isActive"),
+        image: {
+            url,
+            fileName
         }
+    }
 
-        const { success: insertSuccess, data, message: insertErrorMessage } = await insertIn("projects", payload, "*", Roles.admin)
-        check(insertSuccess, `insertion Error > POST > insertIn: ${insertErrorMessage || "failed to insert in table: projects"}`, "response", 500)
+    const { success: insertSuccess, data, message: insertErrorMessage } = await insertIn("projects", payload, "*", Roles.admin)
+    check(insertSuccess, `insertion Error > POST > insertIn: ${insertErrorMessage || "failed to insert in table: projects"}`, "response", 500)
 
-        revalidatePath(`${baseUrl}/${Routes.admin}/projects`);
+    revalidatePath(`${baseUrl}/${Routes.admin}/projects`);
 
-        return {
-            success: true,
-            data
-        }
-    }) as CustomResponse
+    return {
+        success: true,
+        data
+    }
+    // return await withErrorHandling(async () => {
+    // }) as CustomResponse
 }

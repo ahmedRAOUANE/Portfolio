@@ -2,6 +2,7 @@ import { addFeedback } from "@/actions/feedbacks";
 import RatingStars from "@/components/rating-starts";
 import { loadTranslation } from "@/utils/data/load-translations";
 import { Language } from "@/utils/types/languages";
+import Link from "next/link";
 
 const FeedbackPage = async ({ params }: { params: Promise<{ lang: string }> }) => {
   const { lang } = await params;
@@ -9,7 +10,11 @@ const FeedbackPage = async ({ params }: { params: Promise<{ lang: string }> }) =
 
   return (
     <div className="container mx-auto py-16 px-4 bg-background text-foreground min-h-screen">
-      <div className="w-full max-w-4xl mx-auto bg-primary/5 border border-primary rounded-xl shadow-lg p-8">
+      <div className="relative w-full max-w-4xl mx-auto bg-primary/5 border border-primary rounded-xl shadow-lg p-8">
+        <Link href={`/${lang}`} className="absolute -top-5 -right-5 shadow-lg text-danger bg-danger/10 hover:bg-danger/20 transition-colors duration-200 rounded-full p-2 w-10 aspect-square flex items-center justify-center">
+          X
+        </Link>
+        
         <div className="mb-4">
           <h1 className="text-2xl font-semibold mb-3">{translations.feedback.title}</h1>
           <p>{translations.feedback.description}</p>

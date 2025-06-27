@@ -1,4 +1,5 @@
 import { selectFrom } from "@/utils/data/data-cruds";
+import { Language } from "@/utils/types/languages";
 import { Roles } from "@/utils/types/roles";
 import { Translations } from "@/utils/types/translations";
 import Link from "next/link";
@@ -9,12 +10,12 @@ interface Feedback {
   email: string;
   rating: string;
   message: string;
-  date?: string;
+  created_at?: string;
 }
 
-const Feedback = async ({ translations }: { translations: Translations }) => {
+const Feedback = async ({ translations, lang }: { translations: Translations, lang: Language }) => {
   const { data: feedbacks } = await selectFrom<Feedback[]>("feedback", "*", Roles.anone, undefined, 3) || { data: [] };
-
+  
   return (
     <section id='feedback' className="projects-section mt-16 py-12 px-4 bg-background text-foreground">
       <div className="container mx-auto max-w-4xl relative">
@@ -51,7 +52,7 @@ const Feedback = async ({ translations }: { translations: Translations }) => {
                         </svg>
                       ))}
                     </div>
-                    <span className="text-xs text-light">{f.date}</span>
+                    <span className="text-xs text-light">{f.created_at ? new Date(f.created_at).toLocaleDateString() : ""}</span>
                   </div>
                 </div>
               ))
@@ -62,7 +63,7 @@ const Feedback = async ({ translations }: { translations: Translations }) => {
         </div>
 
         <div className="w-full mt-8 flex justify-center">
-          <Link href="/feedback" className="px-4 py-2 rounded-full border border-primary text-primary">{translations.feedback.leaveFeedback}</Link>
+          <Link href={`/${lang}/feedback`} className="px-4 py-2 rounded-full border border-primary text-primary">{translations.feedback.leaveFeedback}</Link>
         </div>
       </div>
     </section>

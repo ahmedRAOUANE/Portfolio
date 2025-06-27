@@ -40,25 +40,27 @@ export const selectFrom = async <T>(table: string, select: string, forRole: Allo
 }
 
 export const insertIn = async <T>(table: string, payload: unknown, select: string, forRole: AllowedRoles): Promise<CustomResponse<T>> => {
-    check(!!table && !!payload && !!select && !!forRole, `insertion Error > insertIn > validation: some required parameters are missing`, "object")
-    
-    if (forRole !== Roles.anone) {
-        await checkUserAuthentication(forRole);
-    }
+    return await withErrorHandling(async () => {
+        check(!!table && !!payload && !!select && !!forRole, `insertion Error > insertIn > validation: some required parameters are missing`, "object")
 
-    const supabase = await createClient();
+        if (forRole !== Roles.anone) {
+            await checkUserAuthentication(forRole);
+        }
 
-    const { data: insertData, error } = await supabase
-        .from(table)
-        .insert([payload])
-        .select(select);
+        const supabase = await createClient();
 
-    check(!error, `insertion Error > insertIn ${table}: ${error?.message || "faled to insert in table"}`, "object")
+        const { data: insertData, error } = await supabase
+            .from(table)
+            .insert([payload])
+            .select(select);
 
-    return {
-        success: true,
-        data: insertData as T
-    }
+        check(!error, `insertion Error > insertIn ${table}: ${error?.message || "faled to insert in table"}`, "object")
+
+        return {
+            success: true,
+            data: insertData as T
+        }
+    }) as CustomResponse<T>;
 }
 
 interface DeleteResponse {
