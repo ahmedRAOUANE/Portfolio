@@ -93,7 +93,8 @@
             "submitting": "sending..",
             "sendSuccess": "Feedback sent successfully!",
             "sendError": "Failed to send feedback. Please try again later.",
-            "sendRequire": "Please fill in all fields."
+            "sendRequire": "Please fill in all fields.",
+            "rating": "Rating"
         },
         "thankYou": "Thank you for your feedback!",
         "noFeedbackAvailable": "No feedback available",

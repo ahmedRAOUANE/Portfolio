@@ -4,12 +4,12 @@ import { Translations } from "@/utils/types/translations";
 import Link from "next/link";
 
 interface Feedback {
-  id: number;
+  id?: number;
   username: string;
   email: string;
-  rating: number;
+  rating: string;
   message: string;
-  date: string;
+  date?: string;
 }
 
 const Feedback = async ({ translations }: { translations: Translations }) => {
@@ -39,7 +39,7 @@ const Feedback = async ({ translations }: { translations: Translations }) => {
                   <p className="text-sm text-light flex-1">{f.message}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                      {Array.from({ length: f.rating }).map((_, i) => (
+                      {Array.from({ length: parseInt(f.rating) || 0 }).map((_, i) => (
                         <svg
                           key={i}
                           xmlns="http://www.w3.org/2000/svg"

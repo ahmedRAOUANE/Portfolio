@@ -97,7 +97,8 @@
         },
         "thankYou": "شكرًا لك على ملاحظاتك!",
         "noFeedbackAvailable": "لا توجد ملاحظات متاحة",
-        "leaveFeedback": "اترك ملاحظاتك"
+        "leaveFeedback": "اترك ملاحظاتك",
+        "rating": "التقييم"
     },
     "auth": {
         "login": {

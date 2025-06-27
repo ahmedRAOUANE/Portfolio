@@ -42,7 +42,9 @@ export const selectFrom = async <T>(table: string, select: string, forRole: Allo
 export const insertIn = async <T>(table: string, payload: unknown, select: string, forRole: AllowedRoles): Promise<CustomResponse<T>> => {
     check(!!table && !!payload && !!select && !!forRole, `insertion Error > insertIn > validation: some required parameters are missing`, "object")
     
-    await checkUserAuthentication(forRole);
+    if (forRole !== Roles.anone) {
+        await checkUserAuthentication(forRole);
+    }
 
     const supabase = await createClient();
 
