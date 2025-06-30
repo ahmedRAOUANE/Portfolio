@@ -8,3 +8,5 @@ export enum Routes {
     admin = "/admin",
     feedback = "/feedback"
 }
+
+export const AVAILABLE_ROUTES = Object.values(Routes);
