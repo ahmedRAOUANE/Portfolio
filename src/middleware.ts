@@ -103,6 +103,6 @@ export const config = {
          * - public folder
          * - api folder
          */
-        '/((?!_next/static|_next/image|logo.svg|favicon.ico|public/|api/|google[\\w-]+\\.html|sitemap.xml).*)',
+        '/((?!_next/static|_next/image|logo.svg|favicon.ico|public/|api/|google[\\w-]+\\.html|sitemap.xml|robots.txt).*)',
     ],
 };
