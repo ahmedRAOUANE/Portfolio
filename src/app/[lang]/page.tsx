@@ -6,7 +6,7 @@ import Footer from '@/components/sections/footer';
 import Skills from '@/components/sections/Skills';
 import { loadTranslation } from '@/utils/data/load-translations';
 import { Language } from '@/utils/types/languages';
-import Feedback from '@/components/sections/feedback';
+// import Feedback from '@/components/sections/feedback';
 
 export default async function Home({ params }: { params: Promise<{ lang: Language }> }) {
   const { lang } = await params;
@@ -21,7 +21,7 @@ export default async function Home({ params }: { params: Promise<{ lang: Languag
         <Skills translations={translations} />
         <Projects translations={translations} />
         <Contact translations={translations} />
-        <Feedback translations={translations} lang={lang} />
+        {/* <Feedback translations={translations} lang={lang} /> */}
       </main>
       
       <Footer translations={translations} />

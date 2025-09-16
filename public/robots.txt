@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /server/
+Disallow: /private/
+Allow: /ar
+Allow: /en
+
+# Optional: point to your sitemap if available
+Sitemap: https://portfolio-ahmedraouanes-projects.vercel.app/sitemap.xml
