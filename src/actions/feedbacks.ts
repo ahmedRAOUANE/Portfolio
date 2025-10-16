@@ -5,6 +5,8 @@ import { insertIn } from "@/utils/data/data-cruds";
 import { Roles } from "@/utils/types/roles";
 
 export const addFeedback = async (formData: FormData) => {
+    return "this feature can not be used at the moment";
+    
     const feedback: Feedback = {
         username: formData.get("name") as string,
         email: formData.get("email") as string,

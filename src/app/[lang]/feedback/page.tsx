@@ -1,12 +1,15 @@
-import { addFeedback } from "@/actions/feedbacks";
+// import { addFeedback } from "@/actions/feedbacks";
 import RatingStars from "@/components/rating-starts";
 import { loadTranslation } from "@/utils/data/load-translations";
 import { Language } from "@/utils/types/languages";
 import Link from "next/link";
+import NotFound from "./not-found";
 
 const FeedbackPage = async ({ params }: { params: Promise<{ lang: string }> }) => {
+  
   const { lang } = await params;
   const translations = await loadTranslation(lang as Language);
+  return <NotFound translations={translations} lang={lang as Language} />;
 
   return (
     <div className="container mx-auto py-16 px-4 bg-background text-foreground min-h-screen">
@@ -20,7 +23,9 @@ const FeedbackPage = async ({ params }: { params: Promise<{ lang: string }> }) =
           <p>{translations.feedback.description}</p>
         </div>
 
-        <form action={addFeedback} className="p-4 space-y-4 border-primary/20 border rounded-lg bg-primary/10">
+        <form 
+          // action={addFeedback} 
+          className="p-4 space-y-4 border-primary/20 border rounded-lg bg-primary/10">
           <div className="w-full">
             <label htmlFor="name" className="hidden">{translations.feedback.form.name}</label>
             <input
