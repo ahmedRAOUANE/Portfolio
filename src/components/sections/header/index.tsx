@@ -29,11 +29,11 @@ const headerLinks = [
         href: '#contact',
         icon: <FiMail />
     },
-    {
-        label: 'feedback' as const,
-        href: '#feedback',
-        icon: <FiMessageCircle />
-    }
+    // {
+    //     label: 'feedback' as const,
+    //     href: '#feedback',
+    //     icon: <FiMessageCircle />
+    // }
 ] as const;
 
 const Header = ({ translations }: { translations: Translations }) => {
