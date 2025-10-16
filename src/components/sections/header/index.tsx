@@ -6,7 +6,7 @@ import OtherOptions from './other-options';
 import ThemeDropdown from './theme-dropdown';
 import LanguagesDropdown from './language-dropdown';
 import OptionsBtn from './options-btn';
-import { FiFolder, FiMail, FiMessageCircle, FiUser, FiZap } from 'react-icons/fi';
+import { FiFolder, FiMail, FiUser, FiZap } from 'react-icons/fi';
 
 const headerLinks = [
     {
