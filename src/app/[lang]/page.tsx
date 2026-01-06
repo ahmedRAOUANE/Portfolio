@@ -6,6 +6,7 @@ import Footer from '@/components/sections/footer';
 import Skills from '@/components/sections/Skills';
 import { loadTranslation } from '@/utils/data/load-translations';
 import { Language } from '@/utils/types/languages';
+import WinterSnow from '@/utils/theme/canvas';
 // import Feedback from '@/components/sections/feedback';
 
 export default async function Home({ params }: { params: Promise<{ lang: Language }> }) {
@@ -13,10 +14,11 @@ export default async function Home({ params }: { params: Promise<{ lang: Languag
   const translations = await loadTranslation(lang as Language);
 
   return (
-    <div className="bg-background">
+    <div className="">
+
       <Header translations={translations} />
 
-      <main>
+      <main className=''>
         <About translations={translations} />
         <Skills translations={translations} />
         <Projects translations={translations} />

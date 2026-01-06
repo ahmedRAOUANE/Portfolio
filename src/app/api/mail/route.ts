@@ -1,3 +1,4 @@
+import EmailTemplate from "@/components/email-template";
 import { resendApiKey } from "@/utils/constansts"
 import { CustomResponse } from "@/utils/types/response"
 import { checkForError, withErrorHandling } from "@/utils/validations";
@@ -24,7 +25,8 @@ export const POST = async (request: Request): Promise<NextResponse<CustomRespons
             to: "ahmedraouane30@gmail.com",
             replyTo: email,
             subject: `New message from ${name}`,
-            html: `<p>${message}</p>`
+            // html: `<p>${message}</p>`
+            react: EmailTemplate({name, message})
         });
 
         checkForError(

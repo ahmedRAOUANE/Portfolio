@@ -32,7 +32,7 @@ const translatedRoutes = [
     Routes.login
 ]
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const preferredLanguage = getPreferredLanguage(request);
 
     try {
@@ -57,7 +57,7 @@ export async function middleware(request: NextRequest) {
         }
 
         if (!isLang && translatedRoutes.includes(currentRoute)) {
-            return NextResponse.redirect(new URL(`/${currentLang}${currentRoute}`));
+            return NextResponse.redirect(new URL(`/${currentLang}${currentRoute}`, request.url));
         }
 
         if (publicRoutes.includes(currentRoute)) {

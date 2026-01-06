@@ -24,10 +24,60 @@
   --color-info: #0284c7;
   --color-light: #4b5563;
   --color-dark: #111827;
+
+  --bg-top: #0a1224;
+  --bg-bottom: #040812;
+  --ice: #9fd9ff;
+  --ice-deep: #4c7ea8;
+  --snow: #ffffff;
+  --accent: #ffecb3;
 }
 
 * {
   @apply transition-all duration-300 ease-in-out;
+}
+
+@keyframes popover {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-popover {
+  animation: popover 0.2s ease-out forwards;
+}
+
+@keyframes popover-hide {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+.animate-popover-hide {
+  animation: popover-hide 0.15s ease-in forwards;
+}
+
+.scene {
+  #snow {
+    position: "fixed";
+    inset: 0;
+    pointer-events: "none";
+    z-index: -1;
+    display: block;
+    }
+  /* canvas {} */
 }
 
 .light {

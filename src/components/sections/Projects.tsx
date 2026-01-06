@@ -9,7 +9,7 @@ const Projects = async ({ translations }: { translations: Translations }) => {
   const sectionTranslations = translations.myProjects;
 
   return (
-    <section id='projects' className="projects-section mt-16 py-12 px-4 bg-background text-foreground">
+    <section id='projects' className="projects-section mt-16 py-12 px-4 text-foreground">
       <div className="container mx-auto max-w-4xl">
         <h2 className="text-3xl font-bold mb-8 text-primary">{sectionTranslations.title}</h2>
 
@@ -22,7 +22,7 @@ const Projects = async ({ translations }: { translations: Translations }) => {
             <>
               {
                 (projectList as Project[]).map((project, index) => (
-                  <div key={index} className="card project-card bg-dark/50 overflow-hidden rounded-lg shadow-xl border border-primary/20 hover:border-primary/40 transition-colors">
+                  <div key={index} className="card project-card bg-dark/50 backdrop-blur overflow-hidden rounded-lg shadow-xl border border-primary/20 hover:border-primary/40 transition-colors">
                     <Image src={project.image.url} alt={project.name} width={400} height={300} className="rounded-t-lg h-48 w-full object-cover" />
 
                     <div className="p-4">

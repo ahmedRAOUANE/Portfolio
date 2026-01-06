@@ -118,7 +118,7 @@ const Skills = ({ translations }: { translations: Translations }) => {
   const sectionTranslations = translations.skills;
 
   return (
-    <section id='skills' className="skills-section mt-16 py-12 px-4 bg-background text-foreground">
+    <section id='skills' className="skills-section mt-16 py-12 px-4 text-foreground">
       <div className='container mx-auto max-w-4xl'>
         <h2 className="text-3xl font-bold mb-8 text-primary">{sectionTranslations.title}</h2>
 
@@ -137,7 +137,7 @@ const SkillsList = ({ skills }: { skills: Skill[] }) => skills.map((skill, index
   return (
     <div
       key={index}
-      className={`rounded-lg p-2 md:p-4 shadow-lg border ${styles.border} ${styles.card} transition-all duration-300`}
+      className={`rounded-lg p-2 md:p-4 shadow-lg border backdrop-blur ${styles.border} ${styles.card} transition-all duration-300`}
     >
       <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
 

@@ -51,7 +51,7 @@ const SendEmailForm = ({ sectionTranslations }: { sectionTranslations: Translati
     };
 
     return (
-        <div className='flex-1 p-6 rounded-2xl shadow-lg w-full bg-dark/5 border border-primary/30 hover:bg-dark/10 transition-all duration-300'>
+        <div className='flex-1 p-6 rounded-2xl shadow-lg w-full bg-dark/5 backdrop-blur border border-primary/30 hover:bg-dark/10 transition-all duration-300'>
             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div className="bg-primary/5 p-3 rounded-lg border border-primary/30 focus-within:border-primary/50 transition-all duration-300">
                     <label htmlFor="name" className='hidden'>{sectionTranslations.form.name.toUpperCase()}</label>
