@@ -38,7 +38,7 @@ const skills: Skill[] = [
     category: Categories.Frontend
   },
   {
-    name: 'Express',
+    name: 'Express.js',
     level: Levels.Intermediate,
     category: Categories.Backend
   },
