@@ -17,7 +17,7 @@ export default function WinterSnow() {
         <canvas
             ref={canvasRef}
             id="snow"
-            className="fixed inset-0 -z-1 pointer-events-none bg-background"
+            className="fixed inset-0 -z-1 pointer-events-none winter-sun-animation"
         />
     );
 }

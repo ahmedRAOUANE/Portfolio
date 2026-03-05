@@ -6,7 +6,7 @@ import Footer from '@/components/sections/footer';
 import Skills from '@/components/sections/Skills';
 import { loadTranslation } from '@/utils/data/load-translations';
 import { Language } from '@/utils/types/languages';
-import WinterSnow from '@/utils/theme/canvas';
+// import WinterSnow from '@/utils/theme/canvas';
 // import Feedback from '@/components/sections/feedback';
 
 export default async function Home({ params }: { params: Promise<{ lang: Language }> }) {

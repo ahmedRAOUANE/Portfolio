@@ -29,7 +29,7 @@ A modern, full-stack portfolio web application built with [Next.js](https://next
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/ahmedRAOUANE/Portfolio.git
-   cd portfolio-next
+   cd portfolio
    ```
 
 2. **Install dependencies:**

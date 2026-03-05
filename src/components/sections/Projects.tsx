@@ -22,7 +22,7 @@ const Projects = async ({ translations }: { translations: Translations }) => {
             <>
               {
                 (projectList as Project[]).map((project, index) => (
-                  <div key={index} className="card project-card bg-dark/50 backdrop-blur overflow-hidden rounded-lg shadow-xl border border-primary/20 hover:border-primary/40 transition-colors">
+                  <div key={index} className="card project-card bg-primary/10 backdrop-blur overflow-hidden rounded-lg shadow-xl border border-primary/20 hover:border-primary/40 transition-colors">
                     <Image src={project.image.url} alt={project.name} width={400} height={300} className="rounded-t-lg h-48 w-full object-cover" />
 
                     <div className="p-4">
