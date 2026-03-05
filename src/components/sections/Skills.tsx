@@ -33,18 +33,18 @@ const skills: Skill[] = [
     category: Categories.Languages
   },
   {
-    name: 'React',
-    level: Levels.Expert,
-    category: Categories.Frontend
-  },
-  {
     name: 'Next.js',
     level: Levels.Advanced,
     category: Categories.Frontend
   },
   {
-    name: 'Node.js',
+    name: 'Express',
     level: Levels.Intermediate,
+    category: Categories.Backend
+  },
+  {
+    name: 'Node.js',
+    level: Levels.Advanced,
     category: Categories.Backend
   },
   {
