@@ -89,7 +89,7 @@ const OtherProjects = () => {
                                 className="group flex items-center gap-4 p-4 bg-primary/5 rounded-lg border border-primary/30 hover:bg-primary/10 transition-all duration-300"
                             >
                                 {project.image && (
-                                    <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                                    <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0">
                                         <Image
                                             src={project.image.url}
                                             alt={project.name}
@@ -99,7 +99,7 @@ const OtherProjects = () => {
                                     </div>
                                 )}
 
-                                <div className="flex-grow">
+                                <div className="grow">
                                     <Link
                                         href={`/admin/projects/${projectId}`}
                                         className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors duration-300"

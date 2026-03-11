@@ -54,7 +54,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                         </nav>
 
                         {/* Main Content */}
-                        <main className="flex-grow pt-24 p-8 text-foreground overflow-auto h-screen bg-background">
+                        <main className="grow pt-24 p-8 text-foreground overflow-auto h-screen bg-background">
                             <div className="max-w-4xl mx-auto">
                                 {children}
                             </div>
