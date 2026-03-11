@@ -1,8 +1,26 @@
 import Header from "@/components/admin-components/header";
 import ThemeProvider from "@/providers/theme-provider";
-// import Footer from "@/components/sections/footer";
 import { Routes } from "@/utils/types/routes";
 import Link from "next/link";
+
+const links = [
+    {
+        href: `${Routes.admin}`,
+        label: `Home`
+    },
+    {
+        href: `${Routes.admin}/projects`,
+        label: `Projects`
+    },
+    {
+        href: `${Routes.admin}/resumes`,
+        label: `Resumes`
+    },
+    {
+        href: `${Routes.admin}/settings`,
+        label: `Settings`
+    },
+]
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -16,33 +34,19 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                         <Header />
 
                         {/* Sidebar */}
-                        <nav className="pt-16 fixed -left-[200px] md:left-0 md:static w-[200px] h-full transition-all duration-300">
+                        <nav className="pt-16 fixed -left-50 md:left-0 md:static w-50 h-full transition-all duration-300">
                             <div className="p-4 flex flex-col justify-between gap-4 bg-dark/5 backdrop-blur h-full border-r border-primary/30">
                                 <ul className="flex flex-col gap-4 text-foreground">
-                                    <li>
-                                        <Link
-                                            href={`${Routes.admin}`}
-                                            className="p-3 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-300 flex items-center gap-2"
-                                        >
-                                            Home
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href={`${Routes.admin}/projects`}
-                                            className="p-3 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-300 flex items-center gap-2"
-                                        >
-                                            Projects
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href={`${Routes.admin}/settings`}
-                                            className="p-3 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-300 flex items-center gap-2"
-                                        >
-                                            Settings
-                                        </Link>
-                                    </li>
+                                    {links.map((link, idx) => (
+                                        <li key={idx}>
+                                            <Link
+                                                href={link.href}
+                                                className="p-3 rounded-lg hover:bg-primary/10 hover:text-primary transition-all duration-300 flex items-center gap-2"
+                                            >
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
                                 </ul>
 
                                 {/* <Footer /> */}
