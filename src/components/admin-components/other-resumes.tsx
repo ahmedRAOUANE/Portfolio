@@ -36,7 +36,7 @@ const OtherResumes = async () => {
                                             {resume.description}
                                         </p>
                                         <p className="text-sm text-light line-clamp-2">
-                                            {resume.created_at} 
+                                            {resume.created_at.split("T")[0]} 
                                         </p>
                                     </div>
                                 </div>
