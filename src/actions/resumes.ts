@@ -1,7 +1,8 @@
 "use server";
 
 import { baseUrl } from "@/utils/constansts";
-import { insertIn } from "@/utils/data/data-cruds";
+import { insertIn, selectFrom } from "@/utils/data/data-cruds";
+import { FilterOptions } from "@/utils/types/filter";
 import { Roles } from "@/utils/types/roles";
 import { Routes } from "@/utils/types/routes";
 import { checkForError } from "@/utils/validations";
@@ -11,18 +12,17 @@ type ResumeType = {
     resumeName: string;
     description: string;
     link: string;
-    isActive: boolean;
-    createdAt: string;
+    created_at: string;
 }
-export const getResumes = async (): Promise<ResumeType[]> => {
-    console.log("get resumes server action trigered");
-    return [{
-        resumeName: "resume",
-        description: "resume",
-        link: "link to resume",
-        isActive: false,
-        createdAt: "21/3/26"
-    }]
+export const getResumes = async (role: Roles, filter?: FilterOptions, limit?: number) => {
+    try {
+        const { success, message, data } = await selectFrom<ResumeType[]>("resumes", "*", role, filter, limit)
+        checkForError(success, message ?? "failed to get resume/s", "object");
+
+        return data as ResumeType[];
+    } catch (err) {
+        console.log("error from get resume: ", err);
+    }
 }
 
 export const addResume = async (formData: FormData) => {
@@ -37,6 +37,7 @@ export const addResume = async (formData: FormData) => {
         checkForError(insertSuccess, `insertion Error > POST > insertIn: ${insertErrorMessage || "failed to insert in table: resumes"}`, "object", 500)
 
         revalidatePath(`${baseUrl}/${Routes.admin}/resumes`);
+        revalidatePath(`${baseUrl}/`);
     } catch (err) {
         console.log("error from add resume server action: ", err);
     }

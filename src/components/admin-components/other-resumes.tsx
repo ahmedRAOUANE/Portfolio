@@ -1,9 +1,10 @@
 
 import { getResumes } from "@/actions/resumes";
+import { Roles } from "@/utils/types/roles";
 import { FaFile } from "react-icons/fa";
 
 const OtherResumes = async () => {
-    const resumes = await getResumes();
+    const resumes = await getResumes(Roles.admin);
 
     return (
         <div className="w-full">
@@ -16,7 +17,7 @@ const OtherResumes = async () => {
                     </div>
                 ) : (
                     resumes.map((resume) => {
-                        const resumeId = resume.createdAt;
+                        const resumeId = resume.created_at;
                         if (!resumeId) return null;
 
                         return (
@@ -35,7 +36,7 @@ const OtherResumes = async () => {
                                             {resume.description}
                                         </p>
                                         <p className="text-sm text-light line-clamp-2">
-                                            {resume.createdAt} 
+                                            {resume.created_at} 
                                         </p>
                                     </div>
                                 </div>
